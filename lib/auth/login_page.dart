@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:android_club_app/auth/signup_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -19,8 +20,6 @@ class _LoginPageState extends State<LoginPage> {
 
   void logIn() {}
 
-  void registerRedirect() {}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,6 +30,15 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // Icon
+              Icon(
+                Icons.android,
+                size: 75.0,
+              ),
+
+              // spacing between
+              SizedBox(height: 10.0),
+
               // Intro Text
               Text("Welcome to Android Club!"),
 
@@ -107,13 +115,43 @@ class _LoginPageState extends State<LoginPage> {
               // Spacing
               SizedBox(height: 15.0),
 
+              // Other Login Methods Text
+              Text("Or Continue With"),
+
+              // Spacing
+              SizedBox(height: 15.0),
+
+              // Other login methods icons
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ImageIcon(
+                    AssetImage('assets/images/github_logo.png'),
+                    size: 50,
+                  ),
+                  SizedBox(width: 10,),
+                  ImageIcon(
+                    AssetImage('assets/images/gmail_logo.png'),
+                    size: 50,
+                  ),
+                ],
+              ),
+
+              // Spacing
+              SizedBox(height: 15.0),
+
               // Register Now redirect
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Already have an account? "),
+                  Text("First time here? "),
                   GestureDetector(
-                    onTap: registerRedirect,
+                    onTap: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const SignupPage())
+                      )
+                    },
                     child: Text(
                       "Register now",
                       style: TextStyle(
@@ -123,7 +161,6 @@ class _LoginPageState extends State<LoginPage> {
                   )
                 ],
               )
-
             ],
           ),
         ),
