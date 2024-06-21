@@ -1,4 +1,3 @@
-import 'package:android_club_app/auth/signup_page.dart';
 import 'package:android_club_app/theme/light_mode.dart';
 import 'package:android_club_app/theme/dark_mode.dart';
 import 'package:flutter/material.dart';

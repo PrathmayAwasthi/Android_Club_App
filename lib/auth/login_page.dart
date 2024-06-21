@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:android_club_app/auth/signup_page.dart';
+import 'package:android_club_app/pages/home_page.dart';
+import 'package:android_club_app/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -17,8 +19,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordController = TextEditingController();
 
   void redirectToForgotPassword() {}
-
-  void logIn() {}
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +90,9 @@ class _LoginPageState extends State<LoginPage> {
 
               // Log In Button
               GestureDetector(
-                onTap: logIn,
+                onTap: () => {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNav()))
+                },
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),

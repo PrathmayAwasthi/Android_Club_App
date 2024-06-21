@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:android_club_app/auth/login_page.dart';
+import 'package:android_club_app/pages/home_page.dart';
+import 'package:android_club_app/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 
 class SignupPage extends StatefulWidget {
@@ -103,7 +105,9 @@ class _SignupPageState extends State<SignupPage> {
 
               // Log In Button
               GestureDetector(
-                onTap: signUp,
+                onTap: () => {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNav()))
+                },
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),

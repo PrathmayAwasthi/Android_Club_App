@@ -11,7 +11,7 @@ class BottomNav extends StatefulWidget {
 }
 
 class _BottomNavState extends State<BottomNav> {
-  int selectedIndex = 0;
+  int selectedIndex = 1;
 
   PageController pageController = PageController();
 
@@ -42,9 +42,9 @@ class _BottomNavState extends State<BottomNav> {
             ],
           ),
           Positioned(
-            left: 50,
-            right: 50,
-            bottom: 30,
+            left: 20,
+            right: 20,
+            bottom: 20,
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0),
@@ -60,18 +60,26 @@ class _BottomNavState extends State<BottomNav> {
                 child: BottomNavigationBar(
                   items: const <BottomNavigationBarItem>[
                     BottomNavigationBarItem(
-                        icon: Icon(Icons.home), label: 'Home'),
+                        icon: Padding(
+                          padding: EdgeInsets.all(6.0),
+                          child: Icon(Icons.picture_in_picture_sharp),
+                        ), label: 'Gallery'),
                     BottomNavigationBarItem(
-                        icon: Icon(Icons.picture_in_picture_sharp), label: 'Gallery'),
+                        icon: Padding(
+                          padding: EdgeInsets.all(6.0),
+                          child: Icon(Icons.home),
+                        ), label: 'Home'),
                     BottomNavigationBarItem(
-                        icon: Icon(Icons.more), label: 'More'),
+                        icon: Padding(
+                          padding: EdgeInsets.all(6.0),
+                          child: Icon(Icons.more),
+                        ), label: 'More'),
                   ],
                   currentIndex: selectedIndex,
-                  selectedItemColor: Color(0xFF0D99FF),
-                  unselectedItemColor: Colors.grey,
+                  selectedItemColor: Color(0xFF34a853),
+                  unselectedItemColor: Theme.of(context).colorScheme.inversePrimary,
                   onTap: onItemTapped,
-                  backgroundColor: const Color(
-                      0xFF132D1C), // Change color to your desired color
+                  backgroundColor: Theme.of(context).colorScheme.secondary, // Change color to your desired color
                 ),
               ),
             ),
