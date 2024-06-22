@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,15 +25,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -49,20 +40,49 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyD7BkeG2J5klnq-1dtiNzgST9nf75sdFyY',
+    appId: '1:764725352319:web:3baae26a7626e176cbec4a',
+    messagingSenderId: '764725352319',
+    projectId: 'android-club-82fd3',
+    authDomain: 'android-club-82fd3.firebaseapp.com',
+    storageBucket: 'android-club-82fd3.appspot.com',
+    measurementId: 'G-D0D7B06K2C',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: '',
-    appId: '1:190244365707:android:2774f9968fb3a38bac7b8e',
-    messagingSenderId: '190244365707',
-    projectId: 'android-club-app',
-    storageBucket: 'android-club-app.appspot.com',
+    apiKey: 'AIzaSyCr9gfly_WT29jr4-OvQMdZpT0X6JDMWD4',
+    appId: '1:764725352319:android:2b7f0c01b80e1867cbec4a',
+    messagingSenderId: '764725352319',
+    projectId: 'android-club-82fd3',
+    storageBucket: 'android-club-82fd3.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: '',
-    appId: '1:190244365707:ios:d0db2e0acb0399adac7b8e',
-    messagingSenderId: '190244365707',
-    projectId: 'android-club-app',
-    storageBucket: 'android-club-app.appspot.com',
+    apiKey: 'AIzaSyAHIxtds9T8gLDqEPiFO8qoKGVY-CBmHEY',
+    appId: '1:764725352319:ios:b5c3d51415254f45cbec4a',
+    messagingSenderId: '764725352319',
+    projectId: 'android-club-82fd3',
+    storageBucket: 'android-club-82fd3.appspot.com',
     iosBundleId: 'com.example.androidClubApp',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyAHIxtds9T8gLDqEPiFO8qoKGVY-CBmHEY',
+    appId: '1:764725352319:ios:b5c3d51415254f45cbec4a',
+    messagingSenderId: '764725352319',
+    projectId: 'android-club-82fd3',
+    storageBucket: 'android-club-82fd3.appspot.com',
+    iosBundleId: 'com.example.androidClubApp',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyD7BkeG2J5klnq-1dtiNzgST9nf75sdFyY',
+    appId: '1:764725352319:web:658439f13b9635a3cbec4a',
+    messagingSenderId: '764725352319',
+    projectId: 'android-club-82fd3',
+    authDomain: 'android-club-82fd3.firebaseapp.com',
+    storageBucket: 'android-club-82fd3.appspot.com',
+    measurementId: 'G-YYKXPY6C5Z',
   );
 }

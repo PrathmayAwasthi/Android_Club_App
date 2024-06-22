@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "190244365707",
-    "project_id": "android-club-app",
-    "storage_bucket": "android-club-app.appspot.com"
+    "project_number": "764725352319",
+    "project_id": "android-club-82fd3",
+    "storage_bucket": "android-club-82fd3.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:190244365707:android:2774f9968fb3a38bac7b8e",
+        "mobilesdk_app_id": "1:764725352319:android:2b7f0c01b80e1867cbec4a",
         "android_client_info": {
           "package_name": "com.example.android_club_app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBNLbbo2SdpNGs2xc7BUU8RCoxLBSu0NTQ"
+          "current_key": "AIzaSyCr9gfly_WT29jr4-OvQMdZpT0X6JDMWD4"
         }
       ],
       "services": {
