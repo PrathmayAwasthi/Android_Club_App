@@ -22,11 +22,10 @@ class _SignupPageState extends State<SignupPage> {
 
   void signUp() {}
 
-  void loginRedirect() {}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Center(
         child: Padding(
