@@ -1,9 +1,12 @@
  // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:android_club_app/auth/firebase_auth/firebase_auth_implement.dart';
 import 'package:android_club_app/auth/login_page.dart';
 import 'package:android_club_app/pages/home_page.dart';
 import 'package:android_club_app/widgets/bottom_nav.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart' ;
 
 class SignupPage extends StatefulWidget {
   const SignupPage({
@@ -15,6 +18,8 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+
+  final FirebaseAuthImplement auth = FirebaseAuthImplement();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -105,9 +110,7 @@ class _SignupPageState extends State<SignupPage> {
 
               // Log In Button
               GestureDetector(
-                onTap: () => {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNav()))
-                },
+                onTap: _signUp,
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
@@ -181,4 +184,25 @@ class _SignupPageState extends State<SignupPage> {
       ),
     );
   }
+
+  void _signUp() async {
+    String name = nameController.text;
+    String email = emailController.text;
+    String password = passwordController.text;
+    String confirmPassword = confirmPasswordController.text;
+
+    if (password!= confirmPassword) {
+      print("Passwords do not match");
+      return;
+    }
+
+    User? user = await auth.signUpWithEmailAndPassword(email, password);
+    if (user!= null) {
+      print("User Created");
+      // You can also navigate to the home page or perform other actions here
+    } else {
+      print("Error creating user");
+    }
+  }
+
 }
