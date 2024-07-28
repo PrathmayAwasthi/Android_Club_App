@@ -2,7 +2,7 @@ import 'package:android_club_app/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../login_page.dart';
+import 'package:android_club_app/auth/firebase_auth//login_page.dart';
 
 
 class CheckAuth extends StatelessWidget {
@@ -15,7 +15,7 @@ class CheckAuth extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
         if (snapshot.hasData) {
-          return LoginPage();
+          return HomePage();
         } else {
           return LoginPage();
         }

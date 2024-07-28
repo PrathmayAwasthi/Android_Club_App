@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:android_club_app/auth/firebase_auth/firebase_auth_implement.dart';
-import 'package:android_club_app/auth/signup_page.dart';
+import 'package:android_club_app/auth/firebase_auth/signup_page.dart';
 import 'package:android_club_app/pages/home_page.dart';
 import 'package:android_club_app/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
@@ -209,7 +209,7 @@ class _LoginPageState extends State<LoginPage> {
         print("Google sign-in successful");
       }
     } catch (e) {
-      print("Error: $e");
+      print("Error Google Sign In: $e");
     }
   }
 

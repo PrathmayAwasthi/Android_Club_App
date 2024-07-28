@@ -1,26 +1,119 @@
 {
   "project_info": {
-    "project_number": "764725352319",
-    "project_id": "android-club-82fd3",
-    "storage_bucket": "android-club-82fd3.appspot.com"
+    "project_number": "845947477263",
+    "project_id": "android-club-65a70",
+    "storage_bucket": "android-club-65a70.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:764725352319:android:2b7f0c01b80e1867cbec4a",
+        "mobilesdk_app_id": "1:845947477263:android:acd7d8a4b21b9235c1327a",
         "android_client_info": {
           "package_name": "com.example.android_club_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "845947477263-si0ekuub0pk69097bhpor7bggot7vs82.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyCr9gfly_WT29jr4-OvQMdZpT0X6JDMWD4"
+          "current_key": "AIzaSyBxv-m7Enu85kKsbrk5PZw8HGQ8GxHhcaA"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "845947477263-si0ekuub0pk69097bhpor7bggot7vs82.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "845947477263-r78vpk53cba4mrv863a3p9ssbaogolbo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.vitbhopal.androidClubApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:845947477263:android:328013c3b8d8f3d4c1327a",
+        "android_client_info": {
+          "package_name": "com.vitbhopal.android_club_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "845947477263-5o8j54i1b09a8htgf4hdk3jjjkdu9a1m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vitbhopal.android_club_app",
+            "certificate_hash": "be8888f382c8a6228dc35f9f93f2fd1bfc58f6de"
+          }
+        },
+        {
+          "client_id": "845947477263-9eraekrp2oumajh51buf0ik3vrsu098j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vitbhopal.android_club_app",
+            "certificate_hash": "542ffa4aa2a7a877ddb5c13eefb8ddaee956b09c"
+          }
+        },
+        {
+          "client_id": "845947477263-al5i5ue31pbtp5oe328am84gm55009fp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vitbhopal.android_club_app",
+            "certificate_hash": "ed24e381883c9a7b49838fc5607021925788847e"
+          }
+        },
+        {
+          "client_id": "845947477263-krmrlf88hr4buob4nohkicrobbndk8jc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vitbhopal.android_club_app",
+            "certificate_hash": "e579a232a366fe991891a967405bfb07c060ecb9"
+          }
+        },
+        {
+          "client_id": "845947477263-u2ap7jh00gbh82s4s1jsrtr1uohb5kff.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vitbhopal.android_club_app",
+            "certificate_hash": "1e75f4689d8f6f34fcd9285a0687201147451f11"
+          }
+        },
+        {
+          "client_id": "845947477263-si0ekuub0pk69097bhpor7bggot7vs82.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxv-m7Enu85kKsbrk5PZw8HGQ8GxHhcaA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "845947477263-si0ekuub0pk69097bhpor7bggot7vs82.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "845947477263-r78vpk53cba4mrv863a3p9ssbaogolbo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.vitbhopal.androidClubApp"
+              }
+            }
+          ]
         }
       }
     }

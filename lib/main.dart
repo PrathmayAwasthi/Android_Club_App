@@ -1,7 +1,7 @@
 import 'package:android_club_app/theme/light_mode.dart';
 import 'package:android_club_app/theme/dark_mode.dart';
 import 'package:flutter/material.dart';
-import 'auth/login_page.dart';
+import 'auth/firebase_auth/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'auth/firebase_auth/CheckAuth.dart';
 

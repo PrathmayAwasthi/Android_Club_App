@@ -1,7 +1,7 @@
  // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:android_club_app/auth/firebase_auth/firebase_auth_implement.dart';
-import 'package:android_club_app/auth/login_page.dart';
+import 'package:android_club_app/auth/firebase_auth//login_page.dart';
 import 'package:android_club_app/pages/home_page.dart';
 import 'package:android_club_app/widgets/bottom_nav.dart';
 import 'package:firebase_auth/firebase_auth.dart';
