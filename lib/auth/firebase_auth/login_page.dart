@@ -41,6 +41,7 @@ class _LoginPageState extends State<LoginPage> {
               Icon(
                 Icons.android,
                 size: 75.0,
+                color: Theme.of(context).colorScheme.inversePrimary,
               ),
 
               // spacing between
@@ -123,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 15.0),
 
               // Other Login Methods Text
-              Text("Or Continue With"),
+              Text("Or Continue With", style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 0.75, fontSize: 15)),
 
               // Spacing
               SizedBox(height: 15.0),
@@ -138,6 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: ImageIcon(
                       AssetImage('assets/images/gmail_logo.png'),
                       size: 50,
+                      color: Theme.of(context).colorScheme.inversePrimary,
                     ),
                   ),
                   SizedBox(width: 10,),
@@ -146,6 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: ImageIcon(
                       AssetImage('assets/images/github_logo.png'),
                       size: 50,
+                      color: Theme.of(context).colorScheme.inversePrimary,
                     ),
                   ),
                 ],

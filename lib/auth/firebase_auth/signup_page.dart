@@ -45,6 +45,7 @@ class _SignupPageState extends State<SignupPage> {
               Icon(
                 Icons.android,
                 size: 75.0,
+                color: Theme.of(context).colorScheme.inversePrimary,
               ),
 
               // spacing between
@@ -153,6 +154,7 @@ class _SignupPageState extends State<SignupPage> {
                     child: ImageIcon(
                       AssetImage('assets/images/gmail_logo.png'),
                       size: 50,
+                      color: Theme.of(context).colorScheme.inversePrimary,
                     ),
                   ),
                   SizedBox(width: 10,),
@@ -161,6 +163,7 @@ class _SignupPageState extends State<SignupPage> {
                     child: ImageIcon(
                       AssetImage('assets/images/github_logo.png'),
                       size: 50,
+                      color: Theme.of(context).colorScheme.inversePrimary,
                     ),
                   ),
                 ],
