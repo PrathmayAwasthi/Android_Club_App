@@ -44,12 +44,12 @@ class _SignupPageState extends State<SignupPage> {
               // Icon
               Icon(
                 Icons.android,
-<<<<<<< Updated upstream
-                size: 75.0,
-=======
+// <<<<<<< Updated upstream
+//                 size: 75.0,
+// =======
                 size: 85.0,
                 color: Theme.of(context).colorScheme.inversePrimary,
->>>>>>> Stashed changes
+// >>>>>>> Stashed changes
               ),
 
               // spacing between

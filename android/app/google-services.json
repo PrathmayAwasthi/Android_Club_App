@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "845947477263-lkdb965jtct2rcqb7h48j9avtc6gfs1m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android_club_app",
+            "certificate_hash": "ff0a7b574c75809b0997588c8d475cb81a7f7e84"
+          }
+        },
+        {
+          "client_id": "845947477263-n8coe2kjpeh0f4v8uq2q7piot0elq5un.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android_club_app",
+            "certificate_hash": "af80d73b400b7c6a8efb8195b53f8f008d4c058d"
+          }
+        },
+        {
           "client_id": "845947477263-si0ekuub0pk69097bhpor7bggot7vs82.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -31,10 +47,10 @@
               "client_type": 3
             },
             {
-              "client_id": "845947477263-r78vpk53cba4mrv863a3p9ssbaogolbo.apps.googleusercontent.com",
+              "client_id": "845947477263-f08knsp133a1gvesg8j1fpplj2520h5a.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.vitbhopal.androidClubApp"
+                "bundle_id": "com.example.androidClubApp"
               }
             }
           ]
@@ -107,10 +123,10 @@
               "client_type": 3
             },
             {
-              "client_id": "845947477263-r78vpk53cba4mrv863a3p9ssbaogolbo.apps.googleusercontent.com",
+              "client_id": "845947477263-f08knsp133a1gvesg8j1fpplj2520h5a.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.vitbhopal.androidClubApp"
+                "bundle_id": "com.example.androidClubApp"
               }
             }
           ]
