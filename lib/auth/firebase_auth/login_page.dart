@@ -121,10 +121,37 @@ class _LoginPageState extends State<LoginPage> {
               ),
 
               // Spacing
-              SizedBox(height: 15.0),
+              SizedBox(height: 55.0),
 
               // Other Login Methods Text
-              Text("Or Continue With"),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FractionalTranslation(
+                    translation: Offset(0, 0),
+                    child: Container(
+                        width: 90,
+                        height: 1.5,
+                        child: SizedBox(
+                          height: 1,
+                          width: 1,
+                          child: ColoredBox(color: Theme.of(context).colorScheme.inversePrimary),
+                        )),
+                  ),
+                  Text("   Or Continue With   "),
+                  FractionalTranslation(
+                    translation: Offset(0, 0),
+                    child: Container(
+                        width: 90,
+                        height: 1.5,
+                        child: SizedBox(
+                          height: 1,
+                          width: 1,
+                          child: ColoredBox(color: Theme.of(context).colorScheme.inversePrimary),
+                        )),
+                  ),
+                ],
+              ),
 
               // Spacing
               SizedBox(height: 15.0),
@@ -133,7 +160,9 @@ class _LoginPageState extends State<LoginPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(width: 10,),
+                  SizedBox(
+                    width: 10,
+                  ),
                   GestureDetector(
                     onTap: signInWithGoogle,
                     child: ImageIcon(
@@ -141,7 +170,9 @@ class _LoginPageState extends State<LoginPage> {
                       size: 50,
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  SizedBox(
+                    width: 10,
+                  ),
                   GestureDetector(
                     onTap: signInWithGitHub,
                     child: ImageIcon(
@@ -164,8 +195,8 @@ class _LoginPageState extends State<LoginPage> {
                     onTap: () => {
                       Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const SignupPage())
-                      )
+                          MaterialPageRoute(
+                              builder: (context) => const SignupPage()))
                     },
                     child: Text(
                       "Register now",
@@ -197,9 +228,11 @@ class _LoginPageState extends State<LoginPage> {
 
   void signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+      final GoogleSignInAccount? googleSignInAccount =
+          await _googleSignIn.signIn();
       if (googleSignInAccount != null) {
-        final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
 
         final AuthCredential credential = GoogleAuthProvider.credential(
           idToken: googleSignInAuthentication.idToken,
@@ -217,19 +250,19 @@ class _LoginPageState extends State<LoginPage> {
   Future<UserCredential> signInWithGitHub() async {
     try {
       final GithubAuthProvider githubProvider = GithubAuthProvider();
-      final UserCredential result = await _firebaseAuth.signInWithProvider(githubProvider);
+      final UserCredential result =
+          await _firebaseAuth.signInWithProvider(githubProvider);
       final User? user = result.user;
       if (user != null) {
         print("GitHub login successful: ${user.uid}");
         return result;
       } else {
-        throw FirebaseAuthException(code: 'ERROR', message: 'GitHub sign-in failed');
+        throw FirebaseAuthException(
+            code: 'ERROR', message: 'GitHub sign-in failed');
       }
     } catch (e) {
       print("Error: $e");
       rethrow;
     }
   }
-
-
 }

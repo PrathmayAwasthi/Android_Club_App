@@ -136,10 +136,37 @@ class _SignupPageState extends State<SignupPage> {
               ),
 
               // Spacing
-              SizedBox(height: 15.0),
+              SizedBox(height: 35.0),
 
               // Other Login Methods Text
-              Text("Or Continue With"),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FractionalTranslation(
+                    translation: Offset(0, 0),
+                    child: Container(
+                        width: 90,
+                        height: 1.5,
+                        child: SizedBox(
+                          height: 1,
+                          width: 1,
+                          child: ColoredBox(color: Theme.of(context).colorScheme.inversePrimary),
+                        )),
+                  ),
+                  Text("   Or Continue With   "),
+                  FractionalTranslation(
+                    translation: Offset(0, 0),
+                    child: Container(
+                        width: 90,
+                        height: 1.5,
+                        child: SizedBox(
+                          height: 1,
+                          width: 1,
+                          child: ColoredBox(color: Theme.of(context).colorScheme.inversePrimary),
+                        )),
+                  ),
+                ],
+              ),
 
               // Spacing
               SizedBox(height: 5.0),
