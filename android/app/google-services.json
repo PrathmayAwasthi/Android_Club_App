@@ -7,6 +7,42 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:845947477263:android:6a89a3bfba8b0790c1327a",
+        "android_client_info": {
+          "package_name": "com.androidclubapp.vitbpl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "845947477263-si0ekuub0pk69097bhpor7bggot7vs82.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxv-m7Enu85kKsbrk5PZw8HGQ8GxHhcaA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "845947477263-si0ekuub0pk69097bhpor7bggot7vs82.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "845947477263-f08knsp133a1gvesg8j1fpplj2520h5a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.androidClubApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:845947477263:android:acd7d8a4b21b9235c1327a",
         "android_client_info": {
           "package_name": "com.example.android_club_app"
@@ -27,6 +63,14 @@
           "android_info": {
             "package_name": "com.example.android_club_app",
             "certificate_hash": "af80d73b400b7c6a8efb8195b53f8f008d4c058d"
+          }
+        },
+        {
+          "client_id": "845947477263-v0lhs70am5oui364edtbtervpj9lognq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android_club_app",
+            "certificate_hash": "cee1d548ee2f9753210e99d1e26afff3fb429fb3"
           }
         },
         {

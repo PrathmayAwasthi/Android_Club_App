@@ -1,4 +1,4 @@
-package com.example.android_club_app
+package com.androidclubapp.vitbpl
 
 import io.flutter.embedding.android.FlutterActivity
 

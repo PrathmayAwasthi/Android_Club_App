@@ -16,7 +16,7 @@ class CheckAuth extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
         if (snapshot.hasData) {
-          return UserInfoPage();
+          return HomePage();
         } else {
           return LoginPage();
         }
