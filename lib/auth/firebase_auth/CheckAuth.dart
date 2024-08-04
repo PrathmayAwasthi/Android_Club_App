@@ -2,7 +2,6 @@ import 'package:android_club_app/pages/home_page.dart';
 import 'package:android_club_app/pages/user_info_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:android_club_app/auth/firebase_auth//login_page.dart';
 
 

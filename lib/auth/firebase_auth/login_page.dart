@@ -2,11 +2,18 @@
 
 import 'package:android_club_app/auth/firebase_auth/firebase_auth_implement.dart';
 import 'package:android_club_app/auth/firebase_auth/signup_page.dart';
+import 'package:android_club_app/auth/firebase_auth/AuthService.dart';
+import 'package:android_club_app/auth/firebase_auth/CheckAuth.dart';
 import 'package:android_club_app/pages/home_page.dart';
 import 'package:android_club_app/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:android_club_app/auth/firebase_auth/userDetDialog.dart';
+
+
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({
@@ -18,8 +25,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  final AuthService _authService = AuthService();
+
   final FirebaseAuthImplement auth = FirebaseAuthImplement();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -28,6 +39,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    var context2 = context;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -133,17 +145,28 @@ class _LoginPageState extends State<LoginPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(width: 10,),
                   GestureDetector(
-                    onTap: signInWithGoogle,
+                    onTap: () async {
+                      await _authService.signInWithGoogle();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CheckAuth()),
+                      );
+                    },
                     child: ImageIcon(
-                      AssetImage('assets/images/gmail_logo.png'),
+                      AssetImage('assets/images/google_logo.png'),
                       size: 50,
                     ),
                   ),
                   SizedBox(width: 10,),
                   GestureDetector(
-                    onTap: signInWithGitHub,
+                    onTap: () async {
+                      await _authService.signInWithGitHub();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CheckAuth()),
+                      );
+                    },
                     child: ImageIcon(
                       AssetImage('assets/images/github_logo.png'),
                       size: 50,
@@ -195,41 +218,22 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void signInWithGoogle() async {
-    try {
-      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
-      if (googleSignInAccount != null) {
-        final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
-
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          idToken: googleSignInAuthentication.idToken,
-          accessToken: googleSignInAuthentication.accessToken,
-        );
-
-        await _firebaseAuth.signInWithCredential(credential);
-        print("Google sign-in successful");
-      }
-    } catch (e) {
-      print("Error Google Sign In: $e");
-    }
-  }
-
-  Future<UserCredential> signInWithGitHub() async {
-    try {
-      final GithubAuthProvider githubProvider = GithubAuthProvider();
-      final UserCredential result = await _firebaseAuth.signInWithProvider(githubProvider);
-      final User? user = result.user;
-      if (user != null) {
-        print("GitHub login successful: ${user.uid}");
-        return result;
-      } else {
-        throw FirebaseAuthException(code: 'ERROR', message: 'GitHub sign-in failed');
-      }
-    } catch (e) {
-      print("Error: $e");
-      rethrow;
-    }
-  }
+  // Future<UserCredential> signInWithGitHub() async {
+  //   try {
+  //     final GithubAuthProvider githubProvider = GithubAuthProvider();
+  //     final UserCredential result = await _firebaseAuth.signInWithProvider(githubProvider);
+  //     final User? user = result.user;
+  //     if (user != null) {
+  //       print("GitHub login successful: ${user.uid}");
+  //       return result;
+  //     } else {
+  //       throw FirebaseAuthException(code: 'ERROR', message: 'GitHub sign-in failed');
+  //     }
+  //   } catch (e) {
+  //     print("Error: $e");
+  //     rethrow;
+  //   }
+  // }
 
 
 }

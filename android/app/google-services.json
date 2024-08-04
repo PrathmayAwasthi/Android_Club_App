@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "845947477263-doqu430b7u86n7omdad8rh9duecatisl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.androidclubapp.vitbpl",
+            "certificate_hash": "2d39366326e28f261e99c10bd4c01cb07075e555"
+          }
+        },
+        {
+          "client_id": "845947477263-skvos7hgkn6g4mof11qr7ja9gtrsvrt6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.androidclubapp.vitbpl",
+            "certificate_hash": "af80d73b400b7c6a8efb8195b53f8f008d4c058d"
+          }
+        },
+        {
           "client_id": "845947477263-si0ekuub0pk69097bhpor7bggot7vs82.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -31,10 +47,10 @@
               "client_type": 3
             },
             {
-              "client_id": "845947477263-f08knsp133a1gvesg8j1fpplj2520h5a.apps.googleusercontent.com",
+              "client_id": "845947477263-834d1nm26kebp4epoi0ijqj47dilvfrj.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.androidClubApp"
+                "bundle_id": "com.androidclubapp.vitbpl"
               }
             }
           ]
@@ -91,10 +107,10 @@
               "client_type": 3
             },
             {
-              "client_id": "845947477263-f08knsp133a1gvesg8j1fpplj2520h5a.apps.googleusercontent.com",
+              "client_id": "845947477263-834d1nm26kebp4epoi0ijqj47dilvfrj.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.androidClubApp"
+                "bundle_id": "com.androidclubapp.vitbpl"
               }
             }
           ]
@@ -167,10 +183,10 @@
               "client_type": 3
             },
             {
-              "client_id": "845947477263-f08knsp133a1gvesg8j1fpplj2520h5a.apps.googleusercontent.com",
+              "client_id": "845947477263-834d1nm26kebp4epoi0ijqj47dilvfrj.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.androidClubApp"
+                "bundle_id": "com.androidclubapp.vitbpl"
               }
             }
           ]
