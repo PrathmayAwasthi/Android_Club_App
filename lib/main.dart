@@ -6,7 +6,6 @@ import 'auth/firebase_auth/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'auth/firebase_auth/CheckAuth.dart';
 
-
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
