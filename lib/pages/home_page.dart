@@ -22,11 +22,15 @@ class _HomePageState extends State<HomePage> {
   bool _isLoading = true;
   String? _errorMessage;
 
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  List<String> _incompleteBannerUrls = [];
+  List<String> _recentCompleteBannerUrls = [];
+
   int activeIndex = 0;
-  final imageSliderImages = [
-    'https://instagram.fidr4-3.fna.fbcdn.net/v/t51.29350-15/441694487_1125226148806078_5259781858375431588_n.heic?stp=dst-jpg_e35&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xMDgweDEwODAuc2RyLmYyOTM1MCJ9&_nc_ht=instagram.fidr4-3.fna.fbcdn.net&_nc_cat=110&_nc_ohc=IdCAxM-DHekQ7kNvgEqT7y4&edm=AEhyXUkBAAAA&ccb=7-5&ig_cache_key=MzM2Mjg5OTAwOTk1MzUyMzc0Nw%3D%3D.2-ccb7-5&oh=00_AYAsn46Nh5f2gZnsdYgwg6XCxuc5VbjG_ratpNjx0d07HA&oe=66B963B4&_nc_sid=8f1549',
-    'https://instagram.fidr4-3.fna.fbcdn.net/v/t51.29350-15/427927525_187351874472305_4775189296717571015_n.heic?stp=dst-jpg_e35&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xMDgweDEwODAuc2RyLmYyOTM1MCJ9&_nc_ht=instagram.fidr4-3.fna.fbcdn.net&_nc_cat=105&_nc_ohc=fIHs_sRGOTkQ7kNvgHT6l7A&edm=AFg4Q8wBAAAA&ccb=7-5&ig_cache_key=MzMwNDExMzcyNTQ3ODQwNjIyOA%3D%3D.2-ccb7-5&oh=00_AYB5Ap9HS2MB3QS476699PEiu3fLfnJqq4mt4Zxg7_u9wg&oe=66B9605C&_nc_sid=0b30b7',
-    'https://instagram.fidr4-2.fna.fbcdn.net/v/t51.29350-15/345668615_571788108398666_5628123569132887542_n.heic?stp=dst-jpg_e35&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xMDgweDEwODAuc2RyLmYyOTM1MCJ9&_nc_ht=instagram.fidr4-2.fna.fbcdn.net&_nc_cat=102&_nc_ohc=496J1m8ziN8Q7kNvgFd6kMG&edm=AFg4Q8wBAAAA&ccb=7-5&ig_cache_key=MzA5OTYwNzg1Nzk1ODU2ODM5NA%3D%3D.2-ccb7-5&oh=00_AYBoSJ9j3k-BZmCQiXIP1D_YsQtXYuEee6I4xAJfmz_WGQ&oe=66B96BCD&_nc_sid=0b30b7'
+  final List<String> imageSliderImages = [
+    'https://firebasestorage.googleapis.com/v0/b/android-club-65a70.appspot.com/o/Event%20Banners%2F2024%20Events%2FAndro%20Mania.jpg?alt=media&token=f3e3e966-e266-44e9-92f7-f52cc6f129db',
+    'https://firebasestorage.googleapis.com/v0/b/android-club-65a70.appspot.com/o/Event%20Banners%2F2024%20Events%2FAndroidFusion.jpg?alt=media&token=a3c792ed-2ad4-45b8-8836-a71a3fe32f5a',
+    'https://firebasestorage.googleapis.com/v0/b/android-club-65a70.appspot.com/o/Event%20Banners%2F2024%20Events%2FDSA_Tussle.jpg?alt=media&token=90d3eaad-26b5-4652-bac4-dfde0e841853'
   ];
 
   @override
@@ -63,6 +67,40 @@ class _HomePageState extends State<HomePage> {
         });
       }
     });
+
+    _fetchEventBanners();
+  }
+
+  Future<void> _fetchEventBanners() async {
+    try {
+      // Fetch events where completion is false
+      QuerySnapshot incompleteSnapshot = await _firestore.collection('events')
+          .where('completion', isEqualTo: false)
+          .get();
+
+      List<String> incompleteUrls = incompleteSnapshot.docs.map((doc) {
+        return doc['bannerURL'] as String;
+      }).toList();
+
+      // Fetch the five most recent events where completion is true
+      QuerySnapshot recentCompleteSnapshot = await _firestore.collection('events')
+          .where('completion', isEqualTo: true)
+          // .orderBy('date', descending: true)
+          .limit(5)
+          .get();
+
+      List<String> recentCompleteUrls = recentCompleteSnapshot.docs.map((doc) {
+        return doc['bannerURL'] as String;
+      }).toList();
+
+      // Update state with fetched banner URLs
+      setState(() {
+        _incompleteBannerUrls = incompleteUrls;
+        _recentCompleteBannerUrls = recentCompleteUrls;
+      });
+    } catch (e) {
+      print('Error fetching banner URLs: $e');
+    }
   }
 
   @override
@@ -74,7 +112,7 @@ class _HomePageState extends State<HomePage> {
             : _errorMessage != null
                 ? Center(
                     child: Padding(
-                      padding: const EdgeInsets.all(25.0),
+                      padding: const EdgeInsets.all(0),
                       child: Text(
                         _errorMessage!,
                         style: TextStyle(color: Colors.red),
@@ -84,56 +122,59 @@ class _HomePageState extends State<HomePage> {
                 : SafeArea(
                     child: Scaffold(
                       body: Padding(
-                        padding: const EdgeInsets.all(18.0),
+                        padding: const EdgeInsets.all(0),
                         child: Scrollbar(
                           child: SingleChildScrollView(
                             child: Column(
                               children: [
-                            
+
                                 SizedBox(height: 18,),
-                            
+
                                 // Current/Upcoming Events
-                            
-                                Container(
-                                  child: Text(
-                                    "UPCOMING EVENTS",
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w500,
-                                      letterSpacing: 5,
-                                    ),
-                                    
-                                  ),
-                                ),
-                            
-                                SizedBox(height: 24,),
-                            
-                                Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: CarouselSlider.builder(
-                                    itemCount: imageSliderImages.length,
-                                    itemBuilder: (context, index, realIndex) {
-                                      final urlimage = imageSliderImages[index];
-                                      return buildImage(urlimage, index);
-                                    },
-                                    options: CarouselOptions(
-                                      height: 350,
-                                      aspectRatio: 1 / 1,
-                                      enlargeCenterPage: true,
-                                      viewportFraction: 0.7,
-                                      autoPlay: true,
-                                      autoPlayInterval: Duration(seconds: 2),
+
+                                if (_incompleteBannerUrls.isNotEmpty) ...[
+                                  Container(
+                                    child: Text(
+                                      "UPCOMING EVENTS",
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w500,
+                                        letterSpacing: 5,
+                                      ),
+
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 12,
-                                ),
-                            
+
+                                  SizedBox(height: 10,),
+
+                                  Padding(
+                                    padding: const EdgeInsets.all(0),
+                                    child: CarouselSlider.builder(
+                                      itemCount: _incompleteBannerUrls.length,
+                                      itemBuilder: (context, index, realIndex) {
+                                        final urlimage = _incompleteBannerUrls[index];
+                                        return buildImage(urlimage, index);
+                                      },
+                                      options: CarouselOptions(
+                                        height: 300,
+                                        aspectRatio: 1 / 1,
+                                        enlargeCenterPage: true,
+                                        viewportFraction: 0.8,
+                                        autoPlay: true,
+                                        autoPlayInterval: Duration(seconds: 5),
+                                          enableInfiniteScroll: _incompleteBannerUrls.length > 1
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 12,
+                                  ),
+                                ],
+
                                 // Past Events
-                            
+
                                 SizedBox(height: 24,),
-                            
+
                                 Container(
                                   child: Text(
                                     "RECENT EVENTS",
@@ -142,33 +183,33 @@ class _HomePageState extends State<HomePage> {
                                       fontWeight: FontWeight.w500,
                                       letterSpacing: 5,
                                     ),
-                                    
+
                                   ),
                                 ),
-                          
-                                SizedBox(height: 24,),
-                            
+
+                                SizedBox(height: 10,),
+
                                 Padding(
-                                  padding: const EdgeInsets.all(16.0),
+                                  padding: const EdgeInsets.all(0),
                                   child: CarouselSlider.builder(
-                                    itemCount: imageSliderImages.length,
+                                    itemCount: _recentCompleteBannerUrls.length,
                                     itemBuilder: (context, index, realIndex) {
-                                      final urlimage = imageSliderImages[index];
+                                      final urlimage = _recentCompleteBannerUrls[index];
                                       return buildImage(urlimage, index);
                                     },
                                     options: CarouselOptions(
                                       height: 350,
                                       aspectRatio: 1 / 1,
-                                      initialPage: 2,
+                                      initialPage: 3,
                                       enlargeCenterPage: true,
-                                      viewportFraction: 0.7,
+                                      viewportFraction: 0.8,
                                       autoPlay: true,
-                                      autoPlayInterval: Duration(seconds: 2),
+                                      autoPlayInterval: Duration(seconds: 4),
                                     ),
                                   ),
                                 ),
-                            
-                                
+
+
                               ],
                             ),
                           ),
@@ -180,10 +221,16 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget buildImage(String urlimage, int index) => Container(
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      child: Image.network(
-        urlimage,
-        fit: BoxFit.cover,
-      ));
+  Widget buildImage(String urlImage, int index) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 3.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10.0),
+        child: Image.network(
+          urlImage,
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
 }

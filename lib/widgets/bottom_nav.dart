@@ -11,9 +11,9 @@ class BottomNav extends StatefulWidget {
 }
 
 class _BottomNavState extends State<BottomNav> {
-  int selectedIndex = 2;
+  int selectedIndex = 1;
 
-  PageController pageController = PageController();
+  PageController pageController = PageController(initialPage: 1);
 
   List<Widget> widgets = [
     const Text('Home'),
