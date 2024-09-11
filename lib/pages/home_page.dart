@@ -2,11 +2,13 @@
 
 import 'package:android_club_app/pages/reg_form.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:android_club_app/auth/firebase_auth/userDetDialog.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:android_club_app/widgets/app_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -25,11 +27,6 @@ class _HomePageState extends State<HomePage> {
   List<String> _eventId = [];
 
   int activeIndex = 0;
-  final List<String> imageSliderImages = [
-    'https://firebasestorage.googleapis.com/v0/b/android-club-65a70.appspot.com/o/Event%20Banners%2F2024%20Events%2FAndro%20Mania.jpg?alt=media&token=f3e3e966-e266-44e9-92f7-f52cc6f129db',
-    'https://firebasestorage.googleapis.com/v0/b/android-club-65a70.appspot.com/o/Event%20Banners%2F2024%20Events%2FAndroidFusion.jpg?alt=media&token=a3c792ed-2ad4-45b8-8836-a71a3fe32f5a',
-    'https://firebasestorage.googleapis.com/v0/b/android-club-65a70.appspot.com/o/Event%20Banners%2F2024%20Events%2FDSA_Tussle.jpg?alt=media&token=90d3eaad-26b5-4652-bac4-dfde0e841853'
-  ];
 
   @override
   void initState() {
@@ -43,9 +40,9 @@ class _HomePageState extends State<HomePage> {
           final docSnapshot = await userDoc.get();
 
           if (docSnapshot.exists) {
-            setState(() {
-              _isLoading = false;
-            });
+            // setState(() {
+            //   _isLoading = false;
+            // });
           } else {
             setState(() {
               _isLoading = false;
@@ -67,6 +64,8 @@ class _HomePageState extends State<HomePage> {
     });
 
     _fetchEventBanners();
+    // addFieldToDocuments();
+    //Use the above function with custom mods to add fields to each document
   }
 
   Future<void> _fetchEventBanners() async {
@@ -100,15 +99,41 @@ class _HomePageState extends State<HomePage> {
         _incompleteBannerUrls = incompleteUrls;
         _recentCompleteBannerUrls = recentCompleteUrls;
         _eventId = eventIds;
+        _isLoading = false;
       });
     } catch (e) {
       print('Error fetching banner URLs: $e');
     }
   }
 
+  Future<void> addFieldToDocuments() async {
+    try {
+      // Reference to the collection
+      CollectionReference users = _firestore.collection('users');
+
+      // Get all documents in the collection
+      QuerySnapshot snapshot = await users.get();
+
+      if (snapshot.docs.isEmpty) {
+        print('No matching documents.');
+        return;
+      }
+
+      // Update each document
+      for (QueryDocumentSnapshot doc in snapshot.docs) {
+        await doc.reference.update({'droids': 0});
+      }
+
+      print('All documents updated successfully.');
+    } catch (e) {
+      print('Error updating documents: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: appBar(title: 'Home'),
       body: Container(
         child: _isLoading
             ? CircularProgressIndicator()

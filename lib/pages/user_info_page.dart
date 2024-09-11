@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:android_club_app/widgets/app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:android_club_app/auth/firebase_auth/userDetDialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -28,6 +29,10 @@ class _UserInfoPageState extends State<UserInfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: appBar(
+        title: 'Home',
+
+      ),
       body: FutureBuilder<DocumentSnapshot>(
         future: FirebaseFirestore.instance.collection('users').doc(userPId).get(),
         builder: (context, snapshot) {
@@ -42,11 +47,18 @@ class _UserInfoPageState extends State<UserInfoPage> {
           return Column(
             mainAxisSize: MainAxisSize.max,
             children: [
+              Align(
+                alignment: Alignment(-0.9,0.1), // Adjust this to position below the AppBar
+                child: Transform.scale(
+                  scale: 1.5, // 1.0 is the default size, 1.5 makes it 50% larger
+                  child: BackButton(),
+                ),
+              ),
               // Top Center Alignment
               Align(
                 alignment: Alignment.topCenter,
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(24, 70, 24, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -118,10 +130,10 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                   focusColor: Colors.transparent,
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
-                                  onTap: () async{
-                                    User? user = FirebaseAuth.instance.currentUser;
-                                    showUserDetailsDialog(context, user!, showCancel: true);
-                                  },
+                                  // onTap: () async{
+                                  //   User? user = FirebaseAuth.instance.currentUser;
+                                  //   showUserDetailsDialog(context, user!, showCancel: true);
+                                  // },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
@@ -135,7 +147,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                         child: Padding(
                                           padding: const EdgeInsets.all(4),
                                           child: Icon(
-                                            Icons.person_outline_rounded,
+                                            Icons.photo,
                                             color: Theme.of(context).colorScheme.primary,
                                             size: 20,
                                           ),
@@ -144,7 +156,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                       Padding(
                                         padding: const EdgeInsetsDirectional.fromSTEB(18, 0, 0, 0),
                                         child: Text(
-                                          'Edit Profile',
+                                          'Event Gallery',
                                           style: Theme.of(context).textTheme.titleMedium,
                                         ),
                                       ),
@@ -329,24 +341,24 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                   highlightColor: Colors.transparent,
                                   onTap: () {
                                     showDialog(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                        title: const Text("Warning!"),
-                                        content: const Text("You Sure wanna do that🤨"),
-                                        actions: [
-                                          TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel")),
-                                          TextButton(onPressed: () async {
-                                            Navigator.pop(context);
-                                            await FirebaseAuth.instance.signOut();
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(builder: (context) => const CheckAuth()),
-                                            );
-                                          },
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                          title: const Text("Warning!"),
+                                          content: const Text("You Sure wanna do that🤨"),
+                                          actions: [
+                                            TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel")),
+                                            TextButton(onPressed: () async {
+                                              Navigator.pop(context);
+                                              await FirebaseAuth.instance.signOut();
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(builder: (context) => const CheckAuth()),
+                                              );
+                                            },
 
-                                          child: const Text("Logout"))
-                                        ],
-                                      )
+                                                child: const Text("Logout"))
+                                          ],
+                                        )
                                     );
                                   },
                                   child: Row(
@@ -394,6 +406,22 @@ class _UserInfoPageState extends State<UserInfoPage> {
           );
         },
       ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(
+          right: 25.0,
+          top: 150.0,
+        ),
+        child: FloatingActionButton(
+          onPressed: () async{
+            User? user = FirebaseAuth.instance.currentUser;
+            showUserDetailsDialog(context, user!, showCancel: true);
+          },
+          child: Icon(Icons.edit),  // Icon inside the FAB
+          backgroundColor: Colors.black12,  // Background color of the FAB
+        ),
+      ),
+
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );
   }
 }

@@ -1,12 +1,20 @@
 import 'package:android_club_app/theme/light_mode.dart';
 import 'package:android_club_app/theme/dark_mode.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'auth/firebase_auth/CheckAuth.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: Colors.white10, //Status Bar Color
+    ),
+  );
+
   runApp(const MyApp());
 }
 

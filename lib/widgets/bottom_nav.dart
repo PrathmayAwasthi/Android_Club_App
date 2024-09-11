@@ -1,6 +1,6 @@
 import 'package:android_club_app/pages/home_page.dart';
-import 'package:android_club_app/pages/photo_gallery_page.dart';
-import 'package:android_club_app/pages/user_info_page.dart';
+import 'package:android_club_app/pages/polls_page.dart';
+import 'package:android_club_app/pages/merch_page.dart';
 import 'package:flutter/material.dart';
 
 class BottomNav extends StatefulWidget {
@@ -17,8 +17,8 @@ class _BottomNavState extends State<BottomNav> {
 
   List<Widget> widgets = [
     const Text('Home'),
-    const Text('Gallery'),
-    const Text('More'),
+    const Text('Polls'),
+    const Text('Merch'),
   ];
 
   void onItemTapped(int index) {
@@ -36,10 +36,10 @@ class _BottomNavState extends State<BottomNav> {
           PageView(
             controller: pageController,
             children: const [
-              
-              PhotoGalleryPage(),
+
+              PollsPage(),
               HomePage(),
-              UserInfoPage(),
+              MerchPage(),
             ],
           ),
           Positioned(
@@ -63,8 +63,8 @@ class _BottomNavState extends State<BottomNav> {
                     BottomNavigationBarItem(
                         icon: Padding(
                           padding: EdgeInsets.all(6.0),
-                          child: Icon(Icons.picture_in_picture_sharp),
-                        ), label: 'Gallery'),
+                          child: Icon(Icons.quiz),
+                        ), label: 'Polls'),
                     BottomNavigationBarItem(
                         icon: Padding(
                           padding: EdgeInsets.all(6.0),
@@ -73,8 +73,8 @@ class _BottomNavState extends State<BottomNav> {
                     BottomNavigationBarItem(
                         icon: Padding(
                           padding: EdgeInsets.all(6.0),
-                          child: Icon(Icons.more),
-                        ), label: 'More'),
+                          child: Icon(Icons.business_center),
+                        ), label: 'Merch'),
                   ],
                   currentIndex: selectedIndex,
                   selectedItemColor: const Color(0xFF34a853),
