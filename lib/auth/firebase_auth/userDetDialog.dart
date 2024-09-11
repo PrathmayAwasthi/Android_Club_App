@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 
 Future<Map<String, String>?> showUserDetailsDialog(BuildContext context, User user, {bool showCancel = false}) async {
 
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   final UserID = user.uid;
 
@@ -34,7 +34,7 @@ Future<Map<String, String>?> showUserDetailsDialog(BuildContext context, User us
     }
   }else{
     try {
-      DocumentSnapshot userDoc = await _firestore.collection('users').doc(UserID).get();
+      DocumentSnapshot userDoc = await firestore.collection('users').doc(UserID).get();
       if (userDoc.exists) {
         var userData = userDoc.data() as Map<String, dynamic>;
         nameController.text = userData['name'] ?? '';
@@ -54,7 +54,7 @@ Future<Map<String, String>?> showUserDetailsDialog(BuildContext context, User us
 
 
   Future<void> writeDet() async {
-    await _firestore.collection('users').doc(UserID).set({
+    await firestore.collection('users').doc(UserID).set({
       'email': emailController.text,
       'name': nameController.text,
       'phone': phoneController.text,
@@ -73,7 +73,7 @@ Future<Map<String, String>?> showUserDetailsDialog(BuildContext context, User us
         child: StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: Text('Enter Your Details', textAlign: TextAlign.center),
+              title: const Text('Enter Your Details', textAlign: TextAlign.center),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -82,15 +82,15 @@ Future<Map<String, String>?> showUserDetailsDialog(BuildContext context, User us
                       backgroundImage: NetworkImage(profilePicUrl),
                       radius: 40,
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     TextField(
                       controller: nameController,
-                      decoration: InputDecoration(labelText: 'Name'),
+                      decoration: const InputDecoration(labelText: 'Name'),
                     ),
                     TextField(
                       controller: emailController,
                       enabled: canToggleSwitch,
-                      decoration: InputDecoration(labelText: 'Email'),
+                      decoration: const InputDecoration(labelText: 'Email'),
                       keyboardType: TextInputType.emailAddress,
                     ),
                     TextField(
@@ -106,10 +106,10 @@ Future<Map<String, String>?> showUserDetailsDialog(BuildContext context, User us
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 10),
+                      padding: const EdgeInsets.only(top: 10),
                       child: Row(
                         children: [
-                          Text("VIT Student"),
+                          const Text("VIT Student"),
                           Transform.scale(
                               scale: 0.8,
                               child: Switch(

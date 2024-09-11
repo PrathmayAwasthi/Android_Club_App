@@ -1,14 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:android_club_app/pages/user_info_page.dart';
-import 'package:android_club_app/widgets/bottom_nav.dart';
+import 'package:android_club_app/pages/reg_form.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:android_club_app/auth/firebase_auth/userDetDialog.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/widgets.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   List<String> _incompleteBannerUrls = [];
   List<String> _recentCompleteBannerUrls = [];
+  List<String> _eventId = [];
 
   int activeIndex = 0;
   final List<String> imageSliderImages = [
@@ -89,6 +87,10 @@ class _HomePageState extends State<HomePage> {
           .limit(5)
           .get();
 
+      List<String> eventIds = incompleteSnapshot.docs.map((doc) {
+        return doc['notificationGroup'] as String; // Get the event id
+      }).toList();
+
       List<String> recentCompleteUrls = recentCompleteSnapshot.docs.map((doc) {
         return doc['bannerURL'] as String;
       }).toList();
@@ -97,6 +99,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _incompleteBannerUrls = incompleteUrls;
         _recentCompleteBannerUrls = recentCompleteUrls;
+        _eventId = eventIds;
       });
     } catch (e) {
       print('Error fetching banner URLs: $e');
@@ -153,15 +156,27 @@ class _HomePageState extends State<HomePage> {
                                       itemCount: _incompleteBannerUrls.length,
                                       itemBuilder: (context, index, realIndex) {
                                         final urlimage = _incompleteBannerUrls[index];
-                                        return buildImage(urlimage, index);
+                                        return InkWell(
+                                          onTap: () {
+                                            // Navigate to RegForm page
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => RegForm(
+                                                eventId: _eventId[index], // Pass the eventid
+                                                imageUrl: _incompleteBannerUrls[index], // Pass the image url
+                                              )),
+                                            );
+                                          },
+                                          child: buildImage(urlimage, index),
+                                        );
                                       },
                                       options: CarouselOptions(
-                                        height: 300,
-                                        aspectRatio: 1 / 1,
-                                        enlargeCenterPage: true,
-                                        viewportFraction: 0.8,
-                                        autoPlay: true,
-                                        autoPlayInterval: Duration(seconds: 5),
+                                          height: 300,
+                                          aspectRatio: 1 / 1,
+                                          enlargeCenterPage: true,
+                                          viewportFraction: 0.8,
+                                          autoPlay: true,
+                                          autoPlayInterval: Duration(seconds: 5),
                                           enableInfiniteScroll: _incompleteBannerUrls.length > 1
                                       ),
                                     ),

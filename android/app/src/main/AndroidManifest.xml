@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.androidclubapp.vitbpl">
-    tools:overrideLibrary="io.flutter.plugins.firebase.auth">
+    >
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:label="android_club_app"

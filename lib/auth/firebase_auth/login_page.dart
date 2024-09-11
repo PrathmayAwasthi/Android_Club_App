@@ -4,13 +4,10 @@ import 'package:android_club_app/auth/firebase_auth/firebase_auth_implement.dart
 import 'package:android_club_app/auth/firebase_auth/signup_page.dart';
 import 'package:android_club_app/auth/firebase_auth/AuthService.dart';
 import 'package:android_club_app/auth/firebase_auth/CheckAuth.dart';
-import 'package:android_club_app/pages/home_page.dart';
-import 'package:android_club_app/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:android_club_app/auth/firebase_auth/userDetDialog.dart';
 
 
 
@@ -42,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
     var context2 = context;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(25.0),

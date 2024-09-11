@@ -1,8 +1,6 @@
-import 'package:android_club_app/pages/user_info_page.dart';
 import 'package:android_club_app/theme/light_mode.dart';
 import 'package:android_club_app/theme/dark_mode.dart';
 import 'package:flutter/material.dart';
-import 'auth/firebase_auth/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'auth/firebase_auth/CheckAuth.dart';
 
@@ -19,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CheckAuth(),
+      home: const CheckAuth(),
       theme: lightMode,
       darkTheme: darkMode,
     );

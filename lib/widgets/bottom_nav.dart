@@ -77,7 +77,7 @@ class _BottomNavState extends State<BottomNav> {
                         ), label: 'More'),
                   ],
                   currentIndex: selectedIndex,
-                  selectedItemColor: Color(0xFF34a853),
+                  selectedItemColor: const Color(0xFF34a853),
                   unselectedItemColor: Theme.of(context).colorScheme.inversePrimary,
                   onTap: onItemTapped,
                   backgroundColor: Theme.of(context).colorScheme.secondary, // Change color to your desired color

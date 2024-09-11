@@ -340,7 +340,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                             await FirebaseAuth.instance.signOut();
                                             Navigator.push(
                                               context,
-                                              MaterialPageRoute(builder: (context) => CheckAuth()),
+                                              MaterialPageRoute(builder: (context) => const CheckAuth()),
                                             );
                                           },
 

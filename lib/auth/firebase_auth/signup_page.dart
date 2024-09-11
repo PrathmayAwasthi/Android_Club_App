@@ -2,12 +2,8 @@
 
 import 'package:android_club_app/auth/firebase_auth/CheckAuth.dart';
 import 'package:android_club_app/auth/firebase_auth/firebase_auth_implement.dart';
-import 'package:android_club_app/auth/firebase_auth//login_page.dart';
-import 'package:android_club_app/pages/home_page.dart';
-import 'package:android_club_app/widgets/bottom_nav.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart' ;
 import 'package:google_sign_in/google_sign_in.dart';
  import 'package:android_club_app/auth/firebase_auth/AuthService.dart';
 
@@ -37,7 +33,7 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(25.0),

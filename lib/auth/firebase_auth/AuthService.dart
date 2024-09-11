@@ -1,4 +1,3 @@
-import 'package:android_club_app/auth/firebase_auth/userDetDialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -13,12 +12,12 @@ class AuthService {
     try{
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       if (googleUser != null) {
-        final GoogleSignInAuthentication? googleAuth = await googleUser
-            ?.authentication;
+        final GoogleSignInAuthentication googleAuth = await googleUser
+            .authentication;
 
         final credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth?.accessToken,
-          idToken: googleAuth?.idToken,
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
         );
 
         final UserCredential userCredential = await _auth.signInWithCredential(
@@ -41,6 +40,7 @@ class AuthService {
     } catch (e) {
       print("Error Google Sign In: $e");
     }
+    return null;
   }
 
   Future<UserCredential> signInWithGitHub() async {
