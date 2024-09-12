@@ -12,7 +12,9 @@ class _MerchPageState extends State<MerchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(title: 'Home'),
+      appBar: appBar(
+        pageTitle: 'Merchandise',
+      ),
       body: Text("Welcome to Merch Section!!\nWe aill be live Soon"),
     );
   }

@@ -30,8 +30,8 @@ class _UserInfoPageState extends State<UserInfoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(
-        title: 'Home',
-
+        pageTitle: 'Set',
+        showBack: true
       ),
       body: FutureBuilder<DocumentSnapshot>(
         future: FirebaseFirestore.instance.collection('users').doc(userPId).get(),
@@ -47,18 +47,18 @@ class _UserInfoPageState extends State<UserInfoPage> {
           return Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Align(
-                alignment: Alignment(-0.9,0.1), // Adjust this to position below the AppBar
-                child: Transform.scale(
-                  scale: 1.5, // 1.0 is the default size, 1.5 makes it 50% larger
-                  child: BackButton(),
-                ),
-              ),
+              // Align(
+              //   alignment: Alignment(-0.9,0.1), // Adjust this to position below the AppBar
+              //   child: Transform.scale(
+              //     scale: 1.5, // 1.0 is the default size, 1.5 makes it 50% larger
+              //     child: BackButton(),
+              //   ),
+              // ),
               // Top Center Alignment
               Align(
                 alignment: Alignment.topCenter,
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(24, 30, 24, 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [

@@ -12,7 +12,9 @@ class _PollsPageState extends State<PollsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(title: 'Home'),
+      appBar: appBar(
+        pageTitle: 'Polls',
+      ),
       body: Text("Welcome to Polls Section!!\nWe aill be live Soon"),
     );
   }

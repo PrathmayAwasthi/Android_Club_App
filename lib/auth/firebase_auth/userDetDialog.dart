@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:android_club_app/auth/firebase_auth/CheckAuth.dart';
 import 'package:flutter/services.dart';
 
 Future<Map<String, String>?> showUserDetailsDialog(BuildContext context, User user, {bool showCancel = false}) async {
@@ -17,9 +18,13 @@ Future<Map<String, String>?> showUserDetailsDialog(BuildContext context, User us
 
   final regNoPattern = RegExp(r'^\d{2}[A-Z]{3}\d{5}$');
 
+  int droids = 0;
+  List allRegisteredEvents = [];
+
   if(!showCancel){
     nameController.text = user.displayName ?? '';
     emailController.text = user.email ?? '';
+    droids = 50;
     // profilePicUrl = user.photoURL ?? '';
 
     final nameParts = nameController.text.split(' ');
@@ -41,6 +46,8 @@ Future<Map<String, String>?> showUserDetailsDialog(BuildContext context, User us
         emailController.text = userData['email'] ?? '';
         phoneController.text = userData['phone'] ?? '';
         regNoController.text = userData['regNo'] ?? '';
+        droids = userData['droids'] ?? '';
+        allRegisteredEvents = userData['allRegisteredEvents'] ?? '';
       }
     } catch (e) {
       print("Error fetching user details from Firestore: $e");
@@ -60,6 +67,8 @@ Future<Map<String, String>?> showUserDetailsDialog(BuildContext context, User us
       'phone': phoneController.text,
       'profilePic': profilePicUrl,
       'regNo': regNoController.text,
+      'droids': droids,
+      'allRegisteredEvents' : allRegisteredEvents,
     });
   }
 
@@ -204,7 +213,12 @@ Future<Map<String, String>?> showUserDetailsDialog(BuildContext context, User us
 
                     if (isPhoneValid && (isRegNoValid || !isRegNoEnabled)) {
                       await writeDet();
-                      Navigator.of(context).pop();
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => CheckAuth()),
+                            (Route<dynamic> route) => false, // This clears all previous routes
+                      );
+                      // Navigator.of(context).pop();
                     }
                   },
 

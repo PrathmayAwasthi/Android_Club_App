@@ -133,7 +133,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(title: 'Home'),
+      appBar: appBar(
+        pageTitle: '',
+        isHomePage: true,
+      ),
       body: Container(
         child: _isLoading
             ? CircularProgressIndicator()

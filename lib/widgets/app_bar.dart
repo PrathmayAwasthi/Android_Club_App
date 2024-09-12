@@ -5,9 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class appBar extends StatefulWidget implements PreferredSizeWidget {
-  final String title;
+  final String pageTitle;
+  final bool isHomePage;
+  final bool showBack;
 
-  const appBar({Key? key, required this.title}) : super(key: key);
+  const appBar({
+    Key? key,
+    required this.pageTitle,
+    this.isHomePage = false,
+    this.showBack = false,
+
+  }) : super(key: key);
 
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
@@ -19,7 +27,7 @@ class appBar extends StatefulWidget implements PreferredSizeWidget {
 class _CustomAppBarState extends State<appBar> {
   String displayName = '';
   String profileURL = '';
-  int droid = 10;
+  int droid = 0;
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
@@ -112,16 +120,20 @@ class _CustomAppBarState extends State<appBar> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween, // Space out the items
               children: [
                 // Title Container
-                Expanded(
+                widget.isHomePage
+                  ? Expanded(
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Column(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center, // Vertically center title
                       crossAxisAlignment: CrossAxisAlignment.start, // Align title to the left
                       children: [
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                        // ),
                         Text(
                           'Graciós\n$displayName',
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.left, // Adjust text alignment
                           style: GoogleFonts.montserrat(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
@@ -131,6 +143,26 @@ class _CustomAppBarState extends State<appBar> {
                       ],
                     ),
                   ),
+                )
+                    : Row(
+                  children: [
+                    widget.showBack
+                        ? IconButton(
+                      icon: Icon(Icons.arrow_back, color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white // For dark mode
+                          : Colors.black,),
+                      onPressed: () => Navigator.pop(context), // Navigate back on tap
+                    )
+                        :SizedBox.shrink(),
+                    Text(
+                      widget.pageTitle,
+                      style: GoogleFonts.montserrat(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                  ],
                 ),
                 // Profile Avatar
                 Align(
