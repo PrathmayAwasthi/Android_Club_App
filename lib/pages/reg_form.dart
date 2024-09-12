@@ -23,11 +23,13 @@ class RegForm extends StatelessWidget {
       title: appTitle,
       theme: ThemeData(
         fontFamily: 'Poppins', // Set the font family to Poppins
-        scaffoldBackgroundColor: const Color(0xFF121212), // Set the background color to #121212
+        // scaffoldBackgroundColor: Theme.of(context).brightness == Brightness.light
+        //     ? Colors.white // For dark mode
+        //     : Colors.black, // Set the background color to #121212
       ),
       home: Scaffold(
         appBar: appBar(
-          pageTitle: 'Form',
+            pageTitle: 'Set',
             showBack: true
         ),
         body: MyCustomForm(eventId: eventId, imageUrl: imageUrl), // Pass eventId and imageUrl to MyCustomForm
@@ -82,13 +84,13 @@ class MyCustomFormState extends State<MyCustomForm> {
         // You may need to handle the case where these fields are null
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('User not found', style: TextStyle(color: Colors.white))),
+          const SnackBar(content: Text('User not found')),
         );
       }
     } catch (e) {
       // Handle any errors that occur during the retrieval
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error fetching user details: $e', style: const TextStyle(color: Colors.white))),
+        SnackBar(content: Text('Error fetching user details: $e')),
       );
     }
   }
@@ -130,7 +132,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             });
 
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Data updated successfully', style: TextStyle(color: Colors.white))),
+              const SnackBar(content: Text('Data updated successfully')),
             );
 
             // Redirect to HomePage on success
@@ -141,14 +143,14 @@ class MyCustomFormState extends State<MyCustomForm> {
           } else {
             // Handle the error case
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Error uploading image', style: TextStyle(color: Colors.white))),
+              const SnackBar(content: Text('Error uploading image')),
             );
           }
         });
       } catch (e) {
         // Handle any errors during the upload or database update process
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e', style: const TextStyle(color: Colors.white))),
+          SnackBar(content: Text('Error: $e')),
         );
       }
     }
@@ -186,16 +188,16 @@ class MyCustomFormState extends State<MyCustomForm> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
-                    borderSide: const BorderSide(color: Colors.white), // Set border color to white
+                    borderSide: const BorderSide(), // Set border color to white
                   ),
                   labelText: 'Email',
-                  labelStyle: const TextStyle(color: Colors.white), // Set label text color to white
+                  labelStyle: const TextStyle(), // Set label text color to white
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white), // Set enabled border color to white
+                    borderSide: const BorderSide(), // Set enabled border color to white
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white), // Set focused border color to white
+                    borderSide: const BorderSide(), // Set focused border color to white
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
@@ -206,7 +208,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   return null;
                 },
                 controller: emailController,
-                style: GoogleFonts.openSans(fontSize: 18, color: Colors.white),
+                style: GoogleFonts.openSans(fontSize: 18),
               ),
 
               const SizedBox(height: 20), // Add space between text fields
@@ -216,16 +218,16 @@ class MyCustomFormState extends State<MyCustomForm> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
-                    borderSide: const BorderSide(color: Colors.white), // Set border color to white
+                    borderSide: const BorderSide(), // Set border color to white
                   ),
                   labelText: 'Name',
-                  labelStyle: const TextStyle(color: Colors.white), // Set label text color to white
+                  labelStyle: const TextStyle(), // Set label text color to white
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white), // Set enabled border color to white
+                    borderSide: const BorderSide(), // Set enabled border color to white
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white), // Set focused border color to white
+                    borderSide: const BorderSide(), // Set focused border color to white
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
@@ -236,7 +238,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   return null;
                 },
                 controller: nameController,
-                style: GoogleFonts.openSans(fontSize: 18, color: Colors.white),
+                style: GoogleFonts.openSans(fontSize: 18),
               ),
 
               const SizedBox(height: 20), // Add space between text fields
@@ -246,16 +248,16 @@ class MyCustomFormState extends State<MyCustomForm> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
-                    borderSide: const BorderSide(color: Colors.white), // Set border color to white
+                    borderSide: const BorderSide(), // Set border color to white
                   ),
                   labelText: 'Phone',
-                  labelStyle: const TextStyle(color: Colors.white), // Set label text color to white
+                  labelStyle: const TextStyle(), // Set label text color to white
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white), // Set enabled border color to white
+                    borderSide: const BorderSide(), // Set enabled border color to white
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white), // Set focused border color to white
+                    borderSide: const BorderSide(), // Set focused border color to white
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
@@ -266,7 +268,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   return null;
                 },
                 controller: phoneController,
-                style: GoogleFonts.openSans(fontSize: 18, color: Colors.white),
+                style: GoogleFonts.openSans(fontSize: 18),
               ),
 
               const SizedBox(height: 20), // Add space between text fields
@@ -276,16 +278,16 @@ class MyCustomFormState extends State<MyCustomForm> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
-                    borderSide: const BorderSide(color: Colors.white), // Set border color to white
+                    borderSide: const BorderSide(), // Set border color to white
                   ),
                   labelText: 'Registration Number',
-                  labelStyle: const TextStyle(color: Colors.white), // Set label text color to white
+                  labelStyle: const TextStyle(), // Set label text color to white
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white), // Set enabled border color to white
+                    borderSide: const BorderSide(), // Set enabled border color to white
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white), // Set focused border color to white
+                    borderSide: const BorderSide(), // Set focused border color to white
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
@@ -296,7 +298,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   return null;
                 },
                 controller: regNoController,
-                style: GoogleFonts.openSans(fontSize: 18, color: Colors.white),
+                style: GoogleFonts.openSans(fontSize: 18),
               ),
 
               const SizedBox(height: 20), // Add space between text fields
@@ -306,16 +308,16 @@ class MyCustomFormState extends State<MyCustomForm> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
-                    borderSide: const BorderSide(color: Colors.white), // Set border color to white
+                    borderSide: const BorderSide(), // Set border color to white
                   ),
                   labelText: 'UPI Transaction ID',
-                  labelStyle: const TextStyle(color: Colors.white), // Set label text color to white
+                  labelStyle: const TextStyle(), // Set label text color to white
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white), // Set enabled border color to white
+                    borderSide: const BorderSide(), // Set enabled border color to white
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white), // Set focused border color to white
+                    borderSide: const BorderSide(), // Set focused border color to white
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
@@ -326,7 +328,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   return null;
                 },
                 controller: upiTransactionIdController,
-                style: GoogleFonts.openSans(fontSize: 18, color: Colors.white),
+                style: GoogleFonts.openSans(fontSize: 18),
               ),
 
               const SizedBox(height: 40), // Add space between text fields
@@ -340,12 +342,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                       children: [
                         SvgPicture.asset('assets/images/upload.svg', height: 20, width: 20), // Replace with your SVG file
                         const SizedBox(width: 10), // Add some space between the icon and the text
-                        const Text('Upload', style: TextStyle(color: Colors.black)),
+                        const Text('Upload'),
                       ],
                     ),
                   ),
                   const SizedBox(width: 10),
-                  Text(_fileName, style: const TextStyle(color: Colors.white)),
+                  Text(_fileName),
                 ],
               ),
 
@@ -363,7 +365,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   'Upload Payment Screenshot here',
                   style: GoogleFonts.poppins(
                     fontSize: 14,
-                    color: Colors.white,
+                    // color: Colors.white,
                   ),
                 ),
               ),
@@ -376,7 +378,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: ElevatedButton(
                       onPressed: _submitForm, // Call the _submitForm method
-                      child: const Text('Submit', style: TextStyle(color: Colors.black)),
+                      child: const Text('Submit'),
                     ),
                   ),
                 ],
