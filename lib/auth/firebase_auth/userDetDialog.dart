@@ -82,17 +82,29 @@ Future<Map<String, String>?> showUserDetailsDialog(BuildContext context, User us
                       backgroundImage: NetworkImage(profilePicUrl),
                       radius: 40,
                     ),
-                    const SizedBox(height: 16),
+
+
+                    const SizedBox(height: 20),
+
+
                     TextField(
                       controller: nameController,
                       decoration: const InputDecoration(labelText: 'Name'),
                     ),
+
+
+                    const SizedBox(height: 20,),
+
+
                     TextField(
                       controller: emailController,
                       enabled: canToggleSwitch,
                       decoration: const InputDecoration(labelText: 'Email'),
                       keyboardType: TextInputType.emailAddress,
                     ),
+
+                    const SizedBox(height: 20,),
+
                     TextField(
                       controller: phoneController,
                       decoration: InputDecoration(
@@ -105,6 +117,33 @@ Future<Map<String, String>?> showUserDetailsDialog(BuildContext context, User us
                         LengthLimitingTextInputFormatter(10),
                       ],
                     ),
+
+
+                    const SizedBox(height: 20,),
+
+
+                    TextField(
+                      controller: regNoController,
+                      decoration: InputDecoration(
+                        labelText: 'Reg No',
+                        errorText: isRegNoValid ? null : "Who You tryna play with Huh😏",
+                      ),
+                      enabled: isRegNoEnabled,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(10),
+                        TextInputFormatter.withFunction(
+                              (oldValue, newValue) => newValue.copyWith(
+                            text: newValue.text.toUpperCase(),
+                            selection: newValue.selection,
+                          ),
+                        ),
+                      ],
+                    ),
+
+
+                    const SizedBox(height: 20,),
+
+
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Row(
@@ -128,23 +167,11 @@ Future<Map<String, String>?> showUserDetailsDialog(BuildContext context, User us
                         ],
                       ),
                     ),
-                    TextField(
-                      controller: regNoController,
-                      decoration: InputDecoration(
-                        labelText: 'Reg No',
-                        errorText: isRegNoValid ? null : "Who You tryna play with Huh😏",
-                      ),
-                      enabled: isRegNoEnabled,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(10),
-                        TextInputFormatter.withFunction(
-                              (oldValue, newValue) => newValue.copyWith(
-                            text: newValue.text.toUpperCase(),
-                            selection: newValue.selection,
-                          ),
-                        ),
-                      ],
-                    ),
+
+
+
+
+                    const SizedBox(height: 20,),
 
 
 
