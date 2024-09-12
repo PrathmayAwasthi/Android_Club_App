@@ -121,7 +121,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                             children: [
                               Divider(
                                 thickness: 1,
-                                color: Theme.of(context).colorScheme.secondary,
+                                color: Colors.white,
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
@@ -341,13 +341,26 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                   highlightColor: Colors.transparent,
                                   onTap: () {
                                     showDialog(
-                                        context: context,
-                                        builder: (context) => AlertDialog(
-                                          title: const Text("Warning!"),
-                                          content: const Text("You Sure wanna do that🤨"),
-                                          actions: [
-                                            TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel")),
-                                            TextButton(onPressed: () async {
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        title: DefaultTextStyle(
+                                          style: TextStyle(color: Colors.white),
+                                          child: const Text("Warning!"),
+                                        ),
+                                        content: DefaultTextStyle(
+                                          style: TextStyle(color: Colors.white),
+                                          child: const Text("You Sure wanna do that🤨"),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(context),
+                                            child: DefaultTextStyle(
+                                              style: TextStyle(color: Colors.white),
+                                              child: const Text("Cancel"),
+                                            ),
+                                          ),
+                                          TextButton(
+                                            onPressed: () async {
                                               Navigator.pop(context);
                                               await FirebaseAuth.instance.signOut();
                                               Navigator.push(
@@ -355,10 +368,13 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                                 MaterialPageRoute(builder: (context) => const CheckAuth()),
                                               );
                                             },
-
-                                                child: const Text("Logout"))
-                                          ],
-                                        )
+                                            child: DefaultTextStyle(
+                                              style: TextStyle(color: Colors.white),
+                                              child: const Text("Logout"),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     );
                                   },
                                   child: Row(

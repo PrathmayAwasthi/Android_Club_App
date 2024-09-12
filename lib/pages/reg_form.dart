@@ -1,4 +1,5 @@
 import 'package:android_club_app/pages/home_page.dart';
+import 'package:android_club_app/pages/user_info_page.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -55,6 +56,40 @@ class MyCustomFormState extends State<MyCustomForm> {
   String _fileName = 'No file chosen';
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch user details when the form initializes
+    _fetchUserDetails();
+  }
+
+  Future<void> _fetchUserDetails() async {
+    try {
+      // Replace 'userIdentifier' with the actual field you want to query, like email or registration number
+      final String userPId = getUserId();
+      final userDoc = await _firestore.collection('users').doc(userPId).get();
+
+      if (userDoc.exists) {
+        final userData = userDoc.data()!;
+        // Update the text controllers with the retrieved data
+        nameController.text = userData['name'] ?? '';
+        phoneController.text = userData['phone'] ?? '';
+        regNoController.text = userData['regNo'] ?? '';
+        emailController.text = userData['email'] ?? '';
+        // You may need to handle the case where these fields are null
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('User not found', style: TextStyle(color: Colors.white))),
+        );
+      }
+    } catch (e) {
+      // Handle any errors that occur during the retrieval
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error fetching user details: $e', style: const TextStyle(color: Colors.white))),
+      );
+    }
+  }
 
   Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
@@ -376,3 +411,4 @@ class MyCustomFormState extends State<MyCustomForm> {
     );
   }
 }
+
