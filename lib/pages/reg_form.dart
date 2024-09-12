@@ -8,6 +8,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../widgets/app_bar.dart';
+
 class RegForm extends StatelessWidget {
   const RegForm({super.key, required this.eventId, required this.imageUrl});
   final String eventId; // Add a field for eventId
@@ -24,9 +26,9 @@ class RegForm extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFF121212), // Set the background color to #121212
       ),
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text(appTitle, style: TextStyle(color: Colors.white)), // Set text color to white
-          backgroundColor: Colors.black, // Set the app bar color to black
+        appBar: appBar(
+          pageTitle: 'Form',
+            showBack: true
         ),
         body: MyCustomForm(eventId: eventId, imageUrl: imageUrl), // Pass eventId and imageUrl to MyCustomForm
       ),
@@ -204,12 +206,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   return null;
                 },
                 controller: emailController,
-                style: GoogleFonts.poppins(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 5,
-                  color: Colors.white, // Set text color to white
-                ),
+                style: GoogleFonts.openSans(fontSize: 18, color: Colors.white),
               ),
 
               const SizedBox(height: 20), // Add space between text fields
@@ -239,12 +236,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   return null;
                 },
                 controller: nameController,
-                style: GoogleFonts.poppins(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 5,
-                  color: Colors.white, // Set text color to white
-                ),
+                style: GoogleFonts.openSans(fontSize: 18, color: Colors.white),
               ),
 
               const SizedBox(height: 20), // Add space between text fields
@@ -274,12 +266,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   return null;
                 },
                 controller: phoneController,
-                style: GoogleFonts.poppins(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 5,
-                  color: Colors.white, // Set text color to white
-                ),
+                style: GoogleFonts.openSans(fontSize: 18, color: Colors.white),
               ),
 
               const SizedBox(height: 20), // Add space between text fields
@@ -309,12 +296,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   return null;
                 },
                 controller: regNoController,
-                style: GoogleFonts.poppins(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 5,
-                  color: Colors.white, // Set text color to white
-                ),
+                style: GoogleFonts.openSans(fontSize: 18, color: Colors.white),
               ),
 
               const SizedBox(height: 20), // Add space between text fields
@@ -344,12 +326,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                   return null;
                 },
                 controller: upiTransactionIdController,
-                style: GoogleFonts.poppins(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 5,
-                  color: Colors.white, // Set text color to white
-                ),
+                style: GoogleFonts.openSans(fontSize: 18, color: Colors.white),
               ),
 
               const SizedBox(height: 40), // Add space between text fields
