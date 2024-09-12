@@ -4,6 +4,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:io';
+import 'package:android_club_app/theme/light_mode.dart'; // Import your light theme
+import 'package:android_club_app/theme/dark_mode.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,12 +23,15 @@ class RegForm extends StatelessWidget {
 
     return MaterialApp(
       title: appTitle,
-      theme: ThemeData(
-        fontFamily: 'Poppins', // Set the font family to Poppins
-        // scaffoldBackgroundColor: Theme.of(context).brightness == Brightness.light
-        //     ? Colors.white // For dark mode
-        //     : Colors.black, // Set the background color to #121212
-      ),
+      theme: lightMode, // Use your light theme
+      darkTheme: darkMode, // Use your dark theme
+      themeMode: ThemeMode.system,
+      // theme: ThemeData(
+      //   fontFamily: 'Poppins', // Set the font family to Poppins
+      //   // scaffoldBackgroundColor: Theme.of(context).brightness == Brightness.light
+      //   //     ? Colors.white // For dark mode
+      //   //     : Colors.black, // Set the background color to #121212
+      // ),
       home: Scaffold(
         appBar: appBar(
             pageTitle: 'Set',
@@ -186,49 +191,65 @@ class MyCustomFormState extends State<MyCustomForm> {
               // Email Box
               TextFormField(
                 decoration: InputDecoration(
+                  labelText: 'Email',
+                  labelStyle: Theme.of(context).inputDecorationTheme.labelStyle, // Use dynamic label color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
-                    borderSide: const BorderSide(), // Set border color to white
+                    borderSide: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                    ), // Adjusts border color dynamically based on theme
                   ),
-                  labelText: 'Email',
-                  labelStyle: const TextStyle(), // Set label text color to white
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(), // Set enabled border color to white
                     borderRadius: BorderRadius.circular(20.0),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(), // Set focused border color to white
                     borderRadius: BorderRadius.circular(20.0),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.dark ? Colors.teal : Colors.black,
+                      width: 2.0,
+                    ),
                   ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter an email';
+                    return 'Please enter a name';
                   }
                   return null;
                 },
                 controller: emailController,
-                style: GoogleFonts.openSans(fontSize: 18),
+                style: GoogleFonts.openSans(fontSize: 18, color: Theme.of(context).colorScheme.onSurface),
               ),
+
+
 
               const SizedBox(height: 20), // Add space between text fields
 
               // Name Box
               TextFormField(
                 decoration: InputDecoration(
+                  labelText: 'Name',
+                  labelStyle: Theme.of(context).inputDecorationTheme.labelStyle, // Use dynamic label color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
-                    borderSide: const BorderSide(), // Set border color to white
+                    borderSide: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                    ), // Adjusts border color dynamically based on theme
                   ),
-                  labelText: 'Name',
-                  labelStyle: const TextStyle(), // Set label text color to white
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(), // Set enabled border color to white
                     borderRadius: BorderRadius.circular(20.0),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(), // Set focused border color to white
                     borderRadius: BorderRadius.circular(20.0),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.dark ? Colors.teal : Colors.black,
+                      width: 2.0,
+                    ),
                   ),
                 ),
                 validator: (value) {
@@ -238,27 +259,36 @@ class MyCustomFormState extends State<MyCustomForm> {
                   return null;
                 },
                 controller: nameController,
-                style: GoogleFonts.openSans(fontSize: 18),
+                style: GoogleFonts.openSans(fontSize: 18, color: Theme.of(context).colorScheme.onSurface),
               ),
+
 
               const SizedBox(height: 20), // Add space between text fields
 
               // Phone Box
+              // Phone TextFormField
               TextFormField(
                 decoration: InputDecoration(
+                  labelText: 'Phone',
+                  labelStyle: Theme.of(context).inputDecorationTheme.labelStyle, // Dynamic label color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
-                    borderSide: const BorderSide(), // Set border color to white
+                    borderSide: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                    ), // Border color based on theme
                   ),
-                  labelText: 'Phone',
-                  labelStyle: const TextStyle(), // Set label text color to white
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(), // Set enabled border color to white
                     borderRadius: BorderRadius.circular(20.0),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                    ), // Enabled border color
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(), // Set focused border color to white
                     borderRadius: BorderRadius.circular(20.0),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.dark ? Colors.teal : Colors.black,
+                      width: 2.0,
+                    ), // Focused border color
                   ),
                 ),
                 validator: (value) {
@@ -268,27 +298,37 @@ class MyCustomFormState extends State<MyCustomForm> {
                   return null;
                 },
                 controller: phoneController,
-                style: GoogleFonts.openSans(fontSize: 18),
+                style: GoogleFonts.openSans(
+                  fontSize: 18,
+                  color: Theme.of(context).colorScheme.onSurface, // Dynamic text color
+                ),
               ),
 
               const SizedBox(height: 20), // Add space between text fields
 
-              // Registration Number Box
+// Registration Number TextFormField
               TextFormField(
                 decoration: InputDecoration(
+                  labelText: 'Registration Number',
+                  labelStyle: Theme.of(context).inputDecorationTheme.labelStyle, // Dynamic label color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
-                    borderSide: const BorderSide(), // Set border color to white
+                    borderSide: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                    ), // Border color based on theme
                   ),
-                  labelText: 'Registration Number',
-                  labelStyle: const TextStyle(), // Set label text color to white
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(), // Set enabled border color to white
                     borderRadius: BorderRadius.circular(20.0),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                    ), // Enabled border color
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(), // Set focused border color to white
                     borderRadius: BorderRadius.circular(20.0),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.dark ? Colors.teal : Colors.black,
+                      width: 2.0,
+                    ), // Focused border color
                   ),
                 ),
                 validator: (value) {
@@ -298,27 +338,37 @@ class MyCustomFormState extends State<MyCustomForm> {
                   return null;
                 },
                 controller: regNoController,
-                style: GoogleFonts.openSans(fontSize: 18),
+                style: GoogleFonts.openSans(
+                  fontSize: 18,
+                  color: Theme.of(context).colorScheme.onSurface, // Dynamic text color
+                ),
               ),
 
               const SizedBox(height: 20), // Add space between text fields
 
-              // UPI Transaction ID Box
+// UPI Transaction ID TextFormField
               TextFormField(
                 decoration: InputDecoration(
+                  labelText: 'UPI Transaction ID',
+                  labelStyle: Theme.of(context).inputDecorationTheme.labelStyle, // Dynamic label color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
-                    borderSide: const BorderSide(), // Set border color to white
+                    borderSide: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                    ), // Border color based on theme
                   ),
-                  labelText: 'UPI Transaction ID',
-                  labelStyle: const TextStyle(), // Set label text color to white
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(), // Set enabled border color to white
                     borderRadius: BorderRadius.circular(20.0),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                    ), // Enabled border color
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(), // Set focused border color to white
                     borderRadius: BorderRadius.circular(20.0),
+                    borderSide: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.dark ? Colors.teal : Colors.black,
+                      width: 2.0,
+                    ), // Focused border color
                   ),
                 ),
                 validator: (value) {
@@ -328,8 +378,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                   return null;
                 },
                 controller: upiTransactionIdController,
-                style: GoogleFonts.openSans(fontSize: 18),
+                style: GoogleFonts.openSans(
+                  fontSize: 18,
+                  color: Theme.of(context).colorScheme.onSurface, // Dynamic text color
+                ),
               ),
+
 
               const SizedBox(height: 40), // Add space between text fields
 

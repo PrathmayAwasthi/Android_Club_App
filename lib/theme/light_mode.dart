@@ -14,11 +14,20 @@ ThemeData lightMode = ThemeData(
     bodyColor: Colors.black,
     displayColor: Colors.black,
   ),
-    inputDecorationTheme: InputDecorationTheme(
-      labelStyle: TextStyle(
-        fontSize: 18,
-        color: Colors.grey,
-      ),
-    )
+  inputDecorationTheme: InputDecorationTheme(
+    labelStyle: TextStyle(
+      fontSize: 18,
+      color: Colors.black,
+    ),
+    border: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.black), // Dark theme border color
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.black),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.black),
+    ),
+  ),
 
 );

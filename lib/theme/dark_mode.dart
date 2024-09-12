@@ -18,8 +18,17 @@ ThemeData darkMode = ThemeData(
   ),
   inputDecorationTheme: InputDecorationTheme(
     labelStyle: TextStyle(
-    fontSize: 18,
-    color: Colors.teal,
+      fontSize: 18,
+      color: Colors.white,
     ),
-  )
+    border: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.white), // Dark theme border color
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.white),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.white),
+    ),
+  ),
 );
