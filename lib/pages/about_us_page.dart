@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AboutUs extends StatelessWidget {
   const AboutUs({super.key});
@@ -40,7 +41,7 @@ class AboutUs extends StatelessWidget {
               color: Colors.grey.withOpacity(0.2),
               spreadRadius: 2,
               blurRadius: 5,
-              offset: Offset(0, 3), // Shadow position
+              offset: const Offset(0, 3),
             ),
           ],
         ),
@@ -57,7 +58,7 @@ class AboutUs extends StatelessWidget {
                         ? AssetImage(profilePicture)
                         : const AssetImage('assets/images/default_profile.png')
                     as ImageProvider,
-                    backgroundColor: Colors.grey.shade200, // Fallback color
+                    backgroundColor: Colors.grey.shade200,
                   ),
                   const SizedBox(width: 16),
                   Column(
@@ -65,7 +66,7 @@ class AboutUs extends StatelessWidget {
                     children: [
                       Text(
                         name,
-                        style: const TextStyle(
+                        style: GoogleFonts.montserrat(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.black87,
@@ -73,7 +74,7 @@ class AboutUs extends StatelessWidget {
                       ),
                       Text(
                         position,
-                        style: const TextStyle(
+                        style: GoogleFonts.lato(
                           fontSize: 18,
                           fontStyle: FontStyle.italic,
                           color: Colors.black54,
@@ -86,7 +87,7 @@ class AboutUs extends StatelessWidget {
               const SizedBox(height: 12),
               Text(
                 bio,
-                style: const TextStyle(
+                style: GoogleFonts.openSans(
                   fontSize: 16,
                   color: Colors.black87,
                 ),
@@ -163,7 +164,10 @@ class AboutUs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('About Us'),
+        title: Text(
+          'About Us',
+          style: GoogleFonts.montserrat(),
+        ),
         backgroundColor: Colors.green,
       ),
       body: Padding(
@@ -172,35 +176,35 @@ class AboutUs extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Welcome to the Android Club',
-                style: TextStyle(
+                style: GoogleFonts.montserrat(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
+              Text(
                 'Where innovation meets exploration!',
-                style: TextStyle(
+                style: GoogleFonts.lato(
                   fontSize: 18,
                   fontStyle: FontStyle.italic,
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
-                'Established in 2019 by visionary founder xyz, our club has been a hub for Android enthusiasts and tech aficionados alike.',
-                style: TextStyle(fontSize: 16),
+              Text(
+                'Established in 2019, our club has been a hub for Android enthusiasts and tech aficionados alike.',
+                style: GoogleFonts.openSans(fontSize: 16),
               ),
               const SizedBox(height: 16),
-              const Text(
+              Text(
                 'At Android Club Vit Bhopal, we don\'t just follow trends; we set them. Through immersive workshops, cutting-edge seminars, and collaborative projects, we empower our members to explore the limitless possibilities of Android development. From crafting sleek UI designs to mastering the intricacies of app development, we thrive on creativity and innovation.',
-                style: TextStyle(fontSize: 16),
+                style: GoogleFonts.openSans(fontSize: 16),
               ),
               const SizedBox(height: 20),
-              const Text(
+              Text(
                 'Club Members',
-                style: TextStyle(
+                style: GoogleFonts.montserrat(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
@@ -213,18 +217,18 @@ class AboutUs extends StatelessWidget {
                 position: 'Club President',
                 bio:
                 'The heart and soul of our Android Club. As president, he exemplifies unparalleled leadership and dedication. With a knack for tackling both technical challenges and life’s hurdles, Harsh is the go-to person for all things Android and beyond.',
-                email: 'harshraj@example.com',
-                linkedIn: 'https://www.linkedin.com/in/harsh-raj-51475021b/',
+                email: 'harsh.raj2021@vitbhopal.ac.in',
+                linkedIn: 'harsh-raj-51475021b',
                 gitHub: 'harshraj',
                 profilePicture: 'assets/images/HarshRaj.jpg',
               ),
               buildMember(
-                name: 'Giriraj Pradeep Parsewar',
+                name: 'Giriraj Parsewar',
                 position: 'Vice President',
                 bio:
                 'Introducing Giriraj Pradeep Parsewar our Vice President and a cornerstone of the Android Club. With a blend of technical expertise and strategic thinking, he seamlessly supports the president while driving forward the club\'s initiatives.',
-                email: 'girirajpradeep@example.com',
-                linkedIn: 'girirajpradeep',
+                email: 'girirajpradeepparsewar2022@vitbhopal.ac.in',
+                linkedIn: 'giriraj-parsewar-07939a1a9',
                 gitHub: 'girirajpradeep',
                 profilePicture: 'assets/images/Giriraj.jpg',
               ),
@@ -233,7 +237,7 @@ class AboutUs extends StatelessWidget {
                 position: 'General Secretary',
                 bio:
                 'Say hello to Avyaan Verma, the General Secretary of our Android Club. Avyaan’s exceptional communication skills and organizational prowess keep the club connected and informed.',
-                email: 'avyaanverma@example.com',
+                email: 'avyaanverma2022@vitbhopal.ac.in',
                 linkedIn: 'avyaanverma',
                 gitHub: 'avyaanverma',
                 profilePicture: 'assets/images/Avyaan.jpg',
@@ -247,18 +251,17 @@ class AboutUs extends StatelessWidget {
                 position: 'Operations Lead',
                 bio:
                 'The backbone of our logistical and operational success. Antareep’s meticulous planning and exceptional problem-solving skills keep the club running like a well-oiled machine.',
-                email: 'antareepdey@example.com',
+                email: 'antareepdey2022@vitbhopal.ac.in',
                 linkedIn: 'antareepdey',
                 gitHub: 'antareepdey',
-                profilePicture:
-                'assets/images/AntareepDey_operations_lead.png',
+                profilePicture: 'assets/images/AntareepDey_operations_lead.png',
               ),
               buildMember(
                 name: 'Samriddhi Tripathi',
                 position: 'Operations Manager',
                 bio:
                 'Excelling as our Operations Manager, Samriddhi manages the day-to-day operations with precision and care. Her proactive approach ensures that everything runs seamlessly.',
-                email: 'samriddhitripathi@example.com',
+                email: 'samriddhitripathi2022@vitbhopal.ac.in',
                 linkedIn: 'samriddhitripathi',
                 gitHub: 'samriddhitripathi',
                 profilePicture: 'assets/images/Samriddhi Tripathi.jpg',
@@ -268,8 +271,8 @@ class AboutUs extends StatelessWidget {
                 position: 'Tech Lead',
                 bio:
                 'At the helm of our technical endeavours, Arrohi leads the Technical Department of our Club. She constantly pushes the boundaries of what’s possible in Android development.',
-                email: 'arrohisrivastava@example.com',
-                linkedIn: 'arrohisrivastava',
+                email: 'arrohisrivastava2022@vitbhopal.ac.in',
+                linkedIn: 'arrohi-srivastava',
                 gitHub: 'arrohisrivastava',
                 profilePicture: 'assets/images/Arrohi Srivastava.jpg',
               ),
@@ -277,10 +280,10 @@ class AboutUs extends StatelessWidget {
                 name: 'Sparsh Tiwari',
                 position: 'Tech Co-lead',
                 bio:
-                'A dynamic individual whose technical acumen and collaborative spirit make Sparsh an invaluable part of our club. He brings fresh perspectives and creative solutions.',
-                email: 'sparshtiwari@example.com',
-                linkedIn: 'sparshtiwari',
-                gitHub: 'sparshtiwari',
+                'A dynamic individual whose technical acumen and collaborative spirit make him the perfect Co-Lead for our Technical Department.',
+                email: 'sparshtiwari2022@vitbhopal.ac.in',
+                linkedIn: 'sparsh-tiwari-222739250',
+                gitHub: 'sparsh',
                 profilePicture: 'assets/images/Sparsh Tiwari.jpg',
               ),
               buildMember(
@@ -288,8 +291,8 @@ class AboutUs extends StatelessWidget {
                 position: 'Non-Tech Lead',
                 bio:
                 'Introducing Swastik Nanda, our Non-Tech Lead, the creative force behind the Android Club’s non-technical initiatives. His exceptional organizational skills drive non-tech projects.',
-                email: 'swastiknanda@example.com',
-                linkedIn: 'swastiknanda',
+                email: 'swastiknanda2022@vitbhopal.ac.in',
+                linkedIn: 'swastik-nanda-837b35251',
                 gitHub: 'swastiknanda',
                 profilePicture: 'assets/images/Swastik Nanda.jpg',
               ),
@@ -298,11 +301,12 @@ class AboutUs extends StatelessWidget {
                 position: 'Non-Tech Co-lead',
                 bio:
                 'With a talent for multitasking and creativity, Disha supports the Non-Tech Lead in executing non-technical operations. Her innovative ideas make her an essential part of the team.',
-                email: 'dishagupta@example.com',
-                linkedIn: 'dishagupta',
+                email: 'dishagupta2022@vitbhopal.ac.in',
+                linkedIn: 'disha-gupta-430174245',
                 gitHub: 'dishagupta',
                 profilePicture: 'assets/images/Disha Gupta.jpg',
               ),
+
             ],
           ),
         ),

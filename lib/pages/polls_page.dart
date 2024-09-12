@@ -11,7 +11,7 @@ class PollsPage extends StatefulWidget {
 class _PollsPageState extends State<PollsPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       appBar: appBar(
         pageTitle: 'Polls',
       ),

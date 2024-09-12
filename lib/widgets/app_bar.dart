@@ -61,7 +61,7 @@ class _CustomAppBarState extends State<appBar> {
     Navigator.push(
       context,
       PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => UserInfoPage(),
+        pageBuilder: (context, animation, secondaryAnimation) => const UserInfoPage(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           // Define the circle expansion animation
           const begin = 0.0;
@@ -101,7 +101,7 @@ class _CustomAppBarState extends State<appBar> {
             child: child,
           );
         },
-        transitionDuration: Duration(milliseconds: 1000),
+        transitionDuration: const Duration(milliseconds: 1000),
       ),
     );
   }
@@ -178,12 +178,12 @@ class _CustomAppBarState extends State<appBar> {
                             padding: const EdgeInsets.symmetric(horizontal: 25.0),
                             child: Row(
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.android, // Android icon
                                   size: 40.0, // Adjust the size of the icon as needed
                                   color: Colors.green, // Adjust the color of the icon
                                 ),
-                                SizedBox(width: 10), // Space between the icon and the text
+                                const SizedBox(width: 10), // Space between the icon and the text
                                 Text(
                                   droid.toString(),
                                   style: GoogleFonts.montserrat(

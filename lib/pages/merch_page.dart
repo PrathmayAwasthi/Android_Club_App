@@ -11,7 +11,7 @@ class MerchPage extends StatefulWidget {
 class _MerchPageState extends State<MerchPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       appBar: appBar(
         pageTitle: 'Merch',
       ),

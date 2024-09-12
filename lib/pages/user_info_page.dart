@@ -1,3 +1,4 @@
+import 'package:android_club_app/pages/about_us_page.dart';
 import 'package:flutter/material.dart';
 import 'package:android_club_app/widgets/app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -237,11 +238,22 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional.fromSTEB(18, 0, 0, 0),
-                                        child: Text(
-                                          'About Us',
-                                          style: Theme.of(context).textTheme.titleMedium,
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => AboutUs(), // Replace with your About Us page widget
+                                              ),
+                                            );
+                                          },
+                                          child: Text(
+                                            'About Us',
+                                            style: Theme.of(context).textTheme.titleMedium,
+                                          ),
                                         ),
                                       ),
+
                                     ],
                                   ),
                                 ),
