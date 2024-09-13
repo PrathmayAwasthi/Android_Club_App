@@ -21,26 +21,14 @@ class RegForm extends StatelessWidget {
   Widget build(BuildContext context) {
     const appTitle = 'Registration Form';
 
-    return MaterialApp(
-      title: appTitle,
-      theme: lightMode, // Use your light theme
-      darkTheme: darkMode, // Use your dark theme
-      themeMode: ThemeMode.system,
-      // theme: ThemeData(
-      //   fontFamily: 'Poppins', // Set the font family to Poppins
-      //   // scaffoldBackgroundColor: Theme.of(context).brightness == Brightness.light
-      //   //     ? Colors.white // For dark mode
-      //   //     : Colors.black, // Set the background color to #121212
-      // ),
-      home: Scaffold(
+    return Scaffold(
         appBar: appBar(
-            pageTitle: 'Set',
-            showBack: true
+          pageTitle: 'Form',
+          showBack: true,
         ),
         body: MyCustomForm(eventId: eventId, imageUrl: imageUrl), // Pass eventId and imageUrl to MyCustomForm
-      ),
-    );
-  }
+        );
+    }
 }
 
 class MyCustomForm extends StatefulWidget {
@@ -136,6 +124,15 @@ class MyCustomFormState extends State<MyCustomForm> {
               'Registered Users': FieldValue.arrayUnion([userData]),
             });
 
+            // Add logic to update the user's document with the eventId
+            final String userPId = getUserId();
+            print('User ID: $userPId');
+
+            await _firestore.collection('users').doc(userPId).update({
+              'allRegisteredEvents': FieldValue.arrayUnion([widget.eventId]),
+
+            });
+
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Data updated successfully')),
             );
@@ -160,6 +157,7 @@ class MyCustomFormState extends State<MyCustomForm> {
       }
     }
   }
+
 
   Future<void> _openImagePicker() async {
     final XFile? pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -392,6 +390,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                 children: [
                   ElevatedButton(
                     onPressed: _openImagePicker,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white, // Set the background color to white
+                      foregroundColor: Colors.black,
+                    ),
                     child: Row(
                       children: [
                         SvgPicture.asset('assets/images/upload.svg', height: 20, width: 20), // Replace with your SVG file
@@ -432,6 +434,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: ElevatedButton(
                       onPressed: _submitForm, // Call the _submitForm method
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white, // Set the background color to white
+                        foregroundColor: Colors.black,
+                      ),
                       child: const Text('Submit'),
                     ),
                   ),

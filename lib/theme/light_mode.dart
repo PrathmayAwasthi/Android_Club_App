@@ -10,6 +10,8 @@ ThemeData lightMode = ThemeData(
     secondary: Colors.white,
     inversePrimary: Color(0xFFA2DDC6),
   ),
+
+
   textTheme: ThemeData.light().textTheme.apply(
     bodyColor: Colors.black,
     displayColor: Colors.black,
