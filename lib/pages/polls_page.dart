@@ -15,7 +15,11 @@ class _PollsPageState extends State<PollsPage> {
       appBar: AndroAppBar(
         pageTitle: 'Polls',
       ),
-      body: Text("Welcome to Polls Section!!\nWe aill be live Soon"),
-    );
+      body: Center(
+        child: Text(
+          "Welcome to Polls Section!!\nWe will be live Soon",
+          style: TextStyle(fontSize: 24),
+        ),
+      ),    );
   }
 }

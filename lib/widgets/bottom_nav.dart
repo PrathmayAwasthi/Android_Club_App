@@ -80,7 +80,7 @@ class _BottomNavState extends State<BottomNav> {
                   selectedItemColor: const Color(0xFF34a853),
                   unselectedItemColor: Theme.of(context).colorScheme.inversePrimary,
                   onTap: onItemTapped,
-                  backgroundColor: Theme.of(context).colorScheme.secondary, // Change color to your desired color
+                  backgroundColor: Theme.of(context).colorScheme.surface, // Change color to your desired color
                 ),
               ),
             ),

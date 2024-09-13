@@ -15,7 +15,11 @@ class _MerchPageState extends State<MerchPage> {
       appBar: AndroAppBar(
         pageTitle: 'Merchandise',
       ),
-      body: Text("Welcome to Merch Section!!\nWe will be live Soon"),
-    );
+      body: Center(
+        child: Text(
+          "Welcome to Merchandise Section!!\nWe will be live Soon",
+          style: TextStyle(fontSize: 24),
+        ),
+      ),    );
   }
 }

@@ -17,7 +17,12 @@ class _RankingPageState extends State<RankingPage> {
         showBack: true,
         clickableIcons: false
       ),
-      body: Text("Welcome to Merch Section!!\nWe aill be live Soon"),
+      body: Center(
+        child: Text(
+          "Welcome to Ranking Section!!\nWe will be live Soon",
+          style: TextStyle(fontSize: 24),
+        ),
+      ),
     );
   }
 }

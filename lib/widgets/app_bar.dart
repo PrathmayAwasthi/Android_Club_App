@@ -181,7 +181,7 @@ class _CustomAppBarState extends State<AndroAppBar> {
                             decoration: BoxDecoration(
                               color: Theme.of(context).brightness == Brightness.dark
                                 ? Colors.white12 // For dark mode
-                                : Colors.black12, // Light background color
+                                : Colors.black26, // Light background color
                               borderRadius: BorderRadius.circular(15.0), // Rounded corners
                             ),
                             child: Row(
