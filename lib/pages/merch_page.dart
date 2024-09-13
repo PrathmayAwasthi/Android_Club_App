@@ -12,10 +12,10 @@ class _MerchPageState extends State<MerchPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: appBar(
-        pageTitle: 'Merch',
+      appBar: AndroAppBar(
+        pageTitle: 'Merchandise',
       ),
-      body: Text("Welcome to Merch Section!!\nWe aill be live Soon"),
+      body: Text("Welcome to Merch Section!!\nWe will be live Soon"),
     );
   }
 }

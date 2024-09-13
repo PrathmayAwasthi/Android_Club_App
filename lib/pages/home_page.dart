@@ -8,6 +8,7 @@ import 'package:android_club_app/auth/firebase_auth/userDetDialog.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:android_club_app/widgets/app_bar.dart';
+import 'package:android_club_app/widgets/animation_custom1.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -132,7 +133,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(
+      appBar: AndroAppBar(
         pageTitle: '',
         isHomePage: true,
       ),
@@ -185,13 +186,15 @@ class _HomePageState extends State<HomePage> {
                                         final urlimage = _incompleteBannerUrls[index];
                                         return InkWell(
                                           onTap: () {
-                                            // Navigate to RegForm page
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(builder: (context) => RegForm(
-                                                eventId: _eventId[index], // Pass the eventid
-                                                imageUrl: _incompleteBannerUrls[index], // Pass the image url
-                                              )),
+                                            Navigator.of(context).push(
+                                              Animation1Route(
+                                                enterWidget: RegForm(
+                                                  eventId: _eventId[index], // Pass the eventid
+                                                  imageUrl: _incompleteBannerUrls[index], // Pass the image url
+                                                ),
+                                                hor: 0.0,
+                                                ver: -0.3
+                                              ),
                                             );
                                           },
                                           child: buildImage(urlimage, index),

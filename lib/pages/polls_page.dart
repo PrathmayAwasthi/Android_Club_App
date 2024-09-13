@@ -12,7 +12,7 @@ class _PollsPageState extends State<PollsPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: appBar(
+      appBar: AndroAppBar(
         pageTitle: 'Polls',
       ),
       body: Text("Welcome to Polls Section!!\nWe aill be live Soon"),

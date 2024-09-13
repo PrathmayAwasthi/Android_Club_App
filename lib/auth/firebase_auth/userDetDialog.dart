@@ -130,6 +130,32 @@ Future<Map<String, String>?> showUserDetailsDialog(BuildContext context, User us
 
                     const SizedBox(height: 20,),
 
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Row(
+                        children: [
+                          const Text("VIT Student"),
+                          Transform.scale(
+                              scale: 0.8,
+                              child: Switch(
+
+                                value: isRegNoEnabled,
+                                onChanged: canToggleSwitch
+                                    ? (value) {
+                                  setState(() {
+                                    isRegNoEnabled = value;
+                                    isRegNoEnabled ? null : regNoController.text = '';
+                                  });
+                                }: null,
+                                activeTrackColor: Colors.teal,
+                              )
+                          )
+
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 20,),
 
                     TextField(
                       controller: regNoController,
@@ -150,43 +176,14 @@ Future<Map<String, String>?> showUserDetailsDialog(BuildContext context, User us
                     ),
 
 
-                    const SizedBox(height: 20,),
-
-
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Row(
-                        children: [
-                          const Text("VIT Student"),
-                          Transform.scale(
-                              scale: 0.8,
-                              child: Switch(
-
-                                value: isRegNoEnabled,
-                                onChanged: canToggleSwitch
-                                    ? (value) {
-                                  setState(() {
-                                    isRegNoEnabled = value;
-                                  });
-                                }: null,
-                                activeTrackColor: Colors.teal,
-                              )
-                          )
-
-                        ],
-                      ),
-                    ),
-
-
 
 
                     const SizedBox(height: 20,),
-
-
 
                   ],
                 ),
               ),
+
               actions: [
                 if (showCancel)
                   TextButton(

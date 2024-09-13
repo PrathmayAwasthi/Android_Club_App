@@ -1,18 +1,24 @@
-import 'package:android_club_app/pages/user_info_page.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class appBar extends StatefulWidget implements PreferredSizeWidget {
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:android_club_app/widgets/animation_custom1.dart';
+import 'package:android_club_app/pages/user_info_page.dart';
+import 'package:android_club_app/pages/ranking_page.dart';
+
+
+class AndroAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String pageTitle;
   final bool isHomePage;
+  final bool clickableIcons;
   final bool showBack;
 
-  const appBar({
+  const AndroAppBar({
     Key? key,
     required this.pageTitle,
     this.isHomePage = false,
+    this.clickableIcons = true,
     this.showBack = false,
 
   }) : super(key: key);
@@ -24,7 +30,7 @@ class appBar extends StatefulWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(60); // Adjusted height
 }
 
-class _CustomAppBarState extends State<appBar> {
+class _CustomAppBarState extends State<AndroAppBar> {
   String displayName = '';
   String profileURL = '';
   int droid = 0;
@@ -57,63 +63,16 @@ class _CustomAppBarState extends State<appBar> {
     }
   }
 
-  void profileView(BuildContext context) {
-    Navigator.push(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => const UserInfoPage(),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          // Define the circle expansion animation
-          const begin = 0.0;
-          const end = 1.0;
-          var circleTween = Tween<double>(begin: begin, end: end);
-          var circleAnimation = animation.drive(circleTween);
-
-          return AnimatedBuilder(
-            animation: animation,
-            builder: (context, child) {
-              // Calculate the radius of the circle based on animation value
-              double radius = circleAnimation.value * MediaQuery.of(context).size.longestSide;
-
-              // Center the circle in the screen
-              return Center(
-                child: ClipRect(
-                  child: Container(
-                    width: radius * 2, // Diameter of the circle
-                    height: radius * 2, // Diameter of the circle
-                    color: Colors.transparent, // Background color or gradient can be added here
-                    child: OverflowBox(
-                      maxWidth: double.infinity,
-                      maxHeight: double.infinity,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height,
-                          child: child,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
-            child: child,
-          );
-        },
-        transitionDuration: const Duration(milliseconds: 1000),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: PreferredSize(
-        preferredSize: const Size.fromHeight(160), // Adjusted height
+        preferredSize: const Size.fromHeight(160), // App Bar Height
         child: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: Colors.white10,
+          automaticallyImplyLeading: false, // Disable back button by default
+          backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? Colors.white12 // For dark mode
+            : Colors.black45,
           flexibleSpace: Container(
             padding: const EdgeInsets.only(left: 20),
             child: Row(
@@ -121,48 +80,83 @@ class _CustomAppBarState extends State<appBar> {
               children: [
                 // Title Container
                 widget.isHomePage
-                  ? Expanded(
+                    ? Expanded( // If Home Page
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center, // Vertically center title
-                      crossAxisAlignment: CrossAxisAlignment.start, // Align title to the left
-                      children: [
-                        // Padding(
-                        //   padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                        // ),
-                        Text(
-                          'Graciós\n$displayName',
-                          textAlign: TextAlign.left, // Adjust text alignment
-                          style: GoogleFonts.montserrat(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 1,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width - 200, // Set the width to total width - 200
+                      child: Wrap( // Use Wrap to wrap the contents
+                        direction: Axis.horizontal,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center, // Vertically center title
+                            crossAxisAlignment: CrossAxisAlignment.start, // Align title to the left
+                            children: [
+                              // Padding(
+                              //   padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                              // ),
+                              Flexible( // Use Flexible to wrap the Text
+                                child: Text(
+                                  'Graciós!\n$displayName',
+                                  textAlign: TextAlign.left, // Adjust text alignment
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: 1,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 )
-                    : Row(
-                  children: [
-                    widget.showBack
-                        ? IconButton(
-                      icon: Icon(Icons.arrow_back, color: Theme.of(context).brightness == Brightness.dark
-                          ? Colors.white // For dark mode
-                          : Colors.black,),
-                      onPressed: () => Navigator.pop(context), // Navigate back on tap
-                    )
-                        :SizedBox.shrink(),
-                    Text(
-                      widget.pageTitle,
-                      style: GoogleFonts.montserrat(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: 1,
+                    : Container( // Any other page except home
+                  width: MediaQuery.of(context).size.width - 190, // Set the width to total width - 190
+                  child: Wrap( // Use Wrap to wrap the contents
+                    direction: Axis.horizontal,
+                    children: [
+                      Row(
+                        children: [
+                          widget.showBack
+                              ? Transform.translate( // Use Transform to translate the Container when showBack is true
+                            offset: const Offset(-20, 0), // Translate 20 pixels to the left
+                            child: IconButton(
+                              icon: Icon(Icons.arrow_back, color: Theme.of(context).brightness == Brightness.dark
+                                  ? Colors.white // For dark mode
+                                  : Colors.black,),
+                              onPressed: () => Navigator.pop(context), // Navigate back on tap
+                            ),
+                          )
+                              : const SizedBox.shrink(),
+                          Flexible( // Use Flexible to wrap the Text
+                            child: widget.showBack
+                              ? Transform.translate( // Use Transform to translate the Text when showBack is true
+                                offset: const Offset(-20, 0), // Translate 20 pixels to the left
+                                child: Text(
+                                  widget.pageTitle,
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: 1,
+                                  ),
+                                ),
+                              )
+                              : Text(
+                                widget.pageTitle,
+                                style: GoogleFonts.montserrat(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                  letterSpacing: 1,
+                                ),
+                              ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 // Profile Avatar
                 Align(
@@ -173,34 +167,58 @@ class _CustomAppBarState extends State<appBar> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
-                          // onTap: () => _onProfilePicTap(context),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                          onTap: !widget.clickableIcons ? null : () { // null when false
+                            Navigator.of(context).push(
+                              Animation1Route(
+                                enterWidget: const RankingPage(),
+                                hor: 0.45,
+                                ver: -0.85
+                              ),
+                            );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 3),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).brightness == Brightness.dark
+                                ? Colors.white12 // For dark mode
+                                : Colors.black12, // Light background color
+                              borderRadius: BorderRadius.circular(15.0), // Rounded corners
+                            ),
                             child: Row(
                               children: [
                                 const Icon(
                                   Icons.android, // Android icon
-                                  size: 40.0, // Adjust the size of the icon as needed
+                                  size: 25.0, // Adjust the size of the icon as needed
                                   color: Colors.green, // Adjust the color of the icon
                                 ),
-                                const SizedBox(width: 10), // Space between the icon and the text
+                                const SizedBox(width: 8), // Space between the icon and the text
                                 Text(
                                   droid.toString(),
                                   style: GoogleFonts.montserrat(
-                                    fontSize: 20,
+                                    fontSize: 18,
                                     fontWeight: FontWeight.w500,
                                     letterSpacing: 1,
                                   ),
                                 ),
+
                               ],
                             ),
                           ),
                         ),
+                        const SizedBox(width: 15,),
                         GestureDetector(
-                          onTap: () => profileView(context),
+                          onTap: !widget.clickableIcons ? null : () { // null when false
+                            Navigator.of(context).push(
+                              Animation1Route(
+                                enterWidget: const UserInfoPage(), //  Transition when true
+                                hor: 0.8,
+                                ver: -0.85
+                              ),
+                            );
+                          },
                           child: CircleAvatar(
                             backgroundImage: NetworkImage(profileURL),
-                            radius: 23, // Adjust the size of the profile picture
+                            radius: 20, // Adjust the size of the profile picture
                           ),
                         ),
                       ],

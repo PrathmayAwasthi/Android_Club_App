@@ -22,7 +22,7 @@ class RegForm extends StatelessWidget {
     const appTitle = 'Registration Form';
 
     return Scaffold(
-        appBar: appBar(
+        appBar: AndroAppBar(
           pageTitle: 'Form',
           showBack: true,
         ),

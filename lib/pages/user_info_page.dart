@@ -1,9 +1,11 @@
-import 'package:android_club_app/pages/about_us_page.dart';
 import 'package:flutter/material.dart';
-import 'package:android_club_app/widgets/app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:android_club_app/auth/firebase_auth/userDetDialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:android_club_app/widgets/app_bar.dart';
+import 'package:android_club_app/widgets/animation_custom1.dart';
+import 'package:android_club_app/pages/about_us_page.dart';
+import 'package:android_club_app/pages/my_events.dart';
+import 'package:android_club_app/auth/firebase_auth/userDetDialog.dart';
 import 'package:android_club_app/auth/firebase_auth/CheckAuth.dart';
 
 class UserInfoPage extends StatefulWidget {
@@ -30,9 +32,10 @@ class _UserInfoPageState extends State<UserInfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(
-        pageTitle: 'Set',
-        showBack: true
+      appBar: const AndroAppBar(
+        pageTitle: 'Settings',
+        showBack: true,
+        clickableIcons: false
       ),
       body: FutureBuilder<DocumentSnapshot>(
         future: FirebaseFirestore.instance.collection('users').doc(userPId).get(),
@@ -48,13 +51,6 @@ class _UserInfoPageState extends State<UserInfoPage> {
           return Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              // Align(
-              //   alignment: Alignment(-0.9,0.1), // Adjust this to position below the AppBar
-              //   child: Transform.scale(
-              //     scale: 1.5, // 1.0 is the default size, 1.5 makes it 50% larger
-              //     child: BackButton(),
-              //   ),
-              // ),
               // Top Center Alignment
               Align(
                 alignment: Alignment.topCenter,
@@ -120,9 +116,8 @@ class _UserInfoPageState extends State<UserInfoPage> {
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              Divider(
+                              const Divider(
                                 thickness: 1,
-                                color: Colors.white,
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
@@ -131,9 +126,58 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                   focusColor: Colors.transparent,
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
-                                  // onTap: () async{
-                                  //   User? user = FirebaseAuth.instance.currentUser;
-                                  //   showUserDetailsDialog(context, user!, showCancel: true);
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      Animation1Route(
+                                        enterWidget: const MyEvent(),
+                                        hor: -0.65,
+                                        ver: 0.05
+                                      ),
+                                    );
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Container(
+                                        width: 35,
+                                        height: 35,
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context).colorScheme.inversePrimary,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4),
+                                          child: Icon(
+                                            Icons.event,
+                                            color: Theme.of(context).colorScheme.primary,
+                                            size: 20,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(18, 0, 0, 0),
+                                        child: Text(
+                                          'My Events',
+                                          style: Theme.of(context).textTheme.titleMedium,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  // onTap: () {
+                                  //   Navigator.of(context).push(
+                                  //     Animation1Route(
+                                  //       enterWidget: MyEvent(),
+                                  //     ),
+                                  //   );
                                   // },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -165,10 +209,6 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                   ),
                                 ),
                               ),
-                              // Divider(
-                              //   thickness: 1,
-                              //   color: Theme.of(context).colorScheme.secondary,
-                              // ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
                                 child: InkWell(
@@ -176,47 +216,15 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                   focusColor: Colors.transparent,
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Container(
-                                        width: 35,
-                                        height: 35,
-                                        decoration: BoxDecoration(
-                                          color: Theme.of(context).colorScheme.inversePrimary,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(4),
-                                          child: Icon(
-                                            Icons.event,
-                                            color: Theme.of(context).colorScheme.primary,
-                                            size: 20,
-                                          ),
-                                        ),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      Animation1Route(
+                                        enterWidget: const AboutUs(),
+                                          hor: -0.65,
+                                          ver: 0.35
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(18, 0, 0, 0),
-                                        child: Text(
-                                          'My Events',
-                                          style: Theme.of(context).textTheme.titleMedium,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              // Divider(
-                              //   thickness: 1,
-                              //   color: Theme.of(context).colorScheme.secondary,
-                              // ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
+                                    );
+                                  },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
@@ -243,7 +251,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (context) => AboutUs(), // Replace with your About Us page widget
+                                                builder: (context) => const AboutUs(), // Replace with your About Us page widget
                                               ),
                                             );
                                           },
@@ -269,6 +277,13 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                   focusColor: Colors.transparent,
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
+                                  // onTap: () {
+                                  //   Navigator.of(context).push(
+                                  //     Animation1Route(
+                                  //       enterWidget: MyEvent(),
+                                  //     ),
+                                  //   );
+                                  // },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
@@ -310,6 +325,13 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                   focusColor: Colors.transparent,
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
+                                  // onTap: () {
+                                  //   Navigator.of(context).push(
+                                  //     Animation1Route(
+                                  //       enterWidget: MyEvent(),
+                                  //     ),
+                                  //   );
+                                  // },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
@@ -351,24 +373,31 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                   focusColor: Colors.transparent,
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
+                                  // onTap: () {
+                                  //   Navigator.of(context).push(
+                                  //     Animation1Route(
+                                  //       enterWidget: MyEvent(),
+                                  //     ),
+                                  //   );
+                                  // },
                                   onTap: () {
                                     showDialog(
                                       context: context,
                                       builder: (context) => AlertDialog(
-                                        title: DefaultTextStyle(
+                                        title: const DefaultTextStyle(
                                           style: TextStyle(color: Colors.white),
-                                          child: const Text("Warning!"),
+                                          child: Text("Warning!"),
                                         ),
-                                        content: DefaultTextStyle(
+                                        content: const DefaultTextStyle(
                                           style: TextStyle(color: Colors.white),
-                                          child: const Text("You Sure wanna do that🤨"),
+                                          child: Text("You Sure wanna do that🤨"),
                                         ),
                                         actions: [
                                           TextButton(
                                             onPressed: () => Navigator.pop(context),
-                                            child: DefaultTextStyle(
+                                            child: const DefaultTextStyle(
                                               style: TextStyle(color: Colors.white),
-                                              child: const Text("Cancel"),
+                                              child: Text("Cancel"),
                                             ),
                                           ),
                                           TextButton(
@@ -380,9 +409,9 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                                 MaterialPageRoute(builder: (context) => const CheckAuth()),
                                               );
                                             },
-                                            child: DefaultTextStyle(
+                                            child: const DefaultTextStyle(
                                               style: TextStyle(color: Colors.white),
-                                              child: const Text("Logout"),
+                                              child: Text("Logout"),
                                             ),
                                           ),
                                         ],
@@ -439,13 +468,21 @@ class _UserInfoPageState extends State<UserInfoPage> {
           right: 25.0,
           top: 150.0,
         ),
-        child: FloatingActionButton(
-          onPressed: () async{
-            User? user = FirebaseAuth.instance.currentUser;
-            showUserDetailsDialog(context, user!, showCancel: true);
-          },
-          child: Icon(Icons.edit),  // Icon inside the FAB
-          backgroundColor: Colors.black12,  // Background color of the FAB
+        child: Transform.scale(
+          scale: 0.8, // Adjust the scale factor to achieve the desired size
+          child: FloatingActionButton(
+            onPressed: () async {
+              User? user = FirebaseAuth.instance.currentUser;
+              showUserDetailsDialog(context, user!, showCancel: true);
+            },
+            backgroundColor: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white12 // For dark mode
+                : Colors.black12,
+            child: Icon(Icons.edit, color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white // For dark mode
+                : Colors.black,
+            ),
+          ),
         ),
       ),
 

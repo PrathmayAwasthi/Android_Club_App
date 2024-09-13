@@ -126,7 +126,7 @@ class _MyEventState extends State<MyEvent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(
+      appBar: AndroAppBar(
         pageTitle: 'My Events',
         showBack: true,
       ),
