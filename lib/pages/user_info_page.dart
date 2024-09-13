@@ -172,13 +172,13 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                   focusColor: Colors.transparent,
                                   hoverColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
-                                  // onTap: () {
-                                  //   Navigator.of(context).push(
-                                  //     Animation1Route(
-                                  //       enterWidget: MyEvent(),
-                                  //     ),
-                                  //   );
-                                  // },
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      Animation1Route(
+                                        enterWidget: MyEvent(),
+                                      ),
+                                    );
+                                  },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
