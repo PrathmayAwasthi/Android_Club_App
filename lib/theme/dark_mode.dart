@@ -8,10 +8,10 @@ ThemeData darkMode = ThemeData(
   brightness: Brightness.dark,
   colorScheme: ColorScheme.dark(
     background: Color(0xFF121212),
-    primary: Color(0xff282828),
-    secondary: Color(0xff282828),
+    primary: Color(0xFF282828),
+    secondary: Color(0xFF282828),
     inversePrimary: Color(0xFF999999),
-    surface: Color(0xff282828),
+    surface: Color(0xFF282828),
   ),
   textTheme: ThemeData.dark().textTheme.apply(
     bodyColor: Colors.white,
@@ -35,7 +35,7 @@ ThemeData darkMode = ThemeData(
 
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: Color(0xFF061C01), // background color of the button
+      backgroundColor: Color(0xFF121212), // background color of the button
       foregroundColor: Colors.white, // text color of the button
       elevation: 2, // elevation of the button
       textStyle: GoogleFonts.poppins(),
