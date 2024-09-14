@@ -139,7 +139,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Container(
         child: _isLoading
-            ? CircularProgressIndicator()
+            ? Center(child: CircularProgressIndicator())
             : _errorMessage != null
                 ? Center(
                     child: Padding(

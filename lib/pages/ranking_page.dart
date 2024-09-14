@@ -142,7 +142,6 @@ class _RankingPageState extends State<RankingPage> {
                                         ? Colors.white24 // For dark mode
                                         : Colors.black12), // Optional: Add a border to the card
                                   ),
-                                  // margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
                                   elevation: 0,
                                   child: ListTile(
                                     leading: CircleAvatar(

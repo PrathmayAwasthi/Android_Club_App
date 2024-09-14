@@ -63,7 +63,7 @@ class _BottomNavState extends State<BottomNav> {
                     BottomNavigationBarItem(
                         icon: Padding(
                           padding: EdgeInsets.all(6.0),
-                          child: Icon(Icons.quiz),
+                          child: Icon(Icons.poll),
                         ), label: 'Polls'),
                     BottomNavigationBarItem(
                         icon: Padding(
@@ -73,11 +73,13 @@ class _BottomNavState extends State<BottomNav> {
                     BottomNavigationBarItem(
                         icon: Padding(
                           padding: EdgeInsets.all(6.0),
-                          child: Icon(Icons.business_center),
+                          child: Icon(Icons.shopping_bag),
                         ), label: 'Merch'),
                   ],
                   currentIndex: selectedIndex,
-                  selectedItemColor: const Color(0xFF34a853),
+                  selectedItemColor: Theme.of(context).brightness == Brightness.dark
+                      ? const Color(0xFFb9d98d) // For dark mode
+                      : const Color(0xFF222222),
                   unselectedItemColor: Theme.of(context).colorScheme.inversePrimary,
                   onTap: onItemTapped,
                   backgroundColor: Theme.of(context).colorScheme.surface, // Change color to your desired color

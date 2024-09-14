@@ -7,11 +7,11 @@ import 'package:google_fonts/google_fonts.dart';
 ThemeData darkMode = ThemeData(
   brightness: Brightness.dark,
   colorScheme: ColorScheme.dark(
-    background: Color(0xFF041400),
-    primary: Color(0xFF061C01),
-    secondary: Color(0xFF061C01),
-    inversePrimary: Color(0xFF8bc9b1),
-    surface: Color(0xFF061C01),
+    background: Color(0xFF121212),
+    primary: Color(0xff282828),
+    secondary: Color(0xff282828),
+    inversePrimary: Color(0xFF999999),
+    surface: Color(0xff282828),
   ),
   textTheme: ThemeData.dark().textTheme.apply(
     bodyColor: Colors.white,
