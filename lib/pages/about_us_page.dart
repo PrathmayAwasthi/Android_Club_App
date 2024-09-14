@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../widgets/app_bar.dart';
+
 class AboutUs extends StatelessWidget {
   const AboutUs({super.key});
 
@@ -163,12 +165,9 @@ class AboutUs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'About Us',
-          style: GoogleFonts.montserrat(),
-        ),
-        backgroundColor: Colors.green,
+      appBar: AndroAppBar(
+        pageTitle: 'About Us',
+        showBack: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

@@ -198,6 +198,7 @@ class _EventDetailState extends State<EventDetail> {
       appBar: const AndroAppBar(
         pageTitle: 'Event Details',
         showBack: true,
+          clickableIcons: false
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())

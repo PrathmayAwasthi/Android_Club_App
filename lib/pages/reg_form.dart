@@ -25,6 +25,7 @@ class RegForm extends StatelessWidget {
         appBar: AndroAppBar(
           pageTitle: 'Form',
           showBack: true,
+            clickableIcons: false
         ),
         body: MyCustomForm(eventId: eventId, imageUrl: imageUrl), // Pass eventId and imageUrl to MyCustomForm
         );
