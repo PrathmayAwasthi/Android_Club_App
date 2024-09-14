@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 ThemeData lightMode = ThemeData(
   brightness: Brightness.light,
@@ -18,8 +20,8 @@ ThemeData lightMode = ThemeData(
     displayColor: Colors.black,
   ),
   inputDecorationTheme: InputDecorationTheme(
-    labelStyle: TextStyle(
-      fontSize: 18,
+    labelStyle: GoogleFonts.openSans(
+      fontSize: 16,
       color: Colors.black,
     ),
     border: OutlineInputBorder(
@@ -30,6 +32,24 @@ ThemeData lightMode = ThemeData(
     ),
     focusedBorder: OutlineInputBorder(
       borderSide: BorderSide(color: Colors.black),
+    ),
+  ),
+
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: Color(0xffcae8c3), // background color of the button
+      foregroundColor: Colors.black, // text color of the button
+      elevation: 2, // elevation of the button
+      textStyle: GoogleFonts.poppins(),
+    ),
+  ),
+
+  cardTheme: CardTheme(
+    // color: Colors.black, // background color for the card
+    elevation: 4, // card elevation to cast shadow
+    shadowColor: Colors.black, // white shadow for the card
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15), // rounded corners for the card
     ),
   ),
 

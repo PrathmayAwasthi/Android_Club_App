@@ -195,7 +195,7 @@ class _EventDetailState extends State<EventDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AndroAppBar(
+      appBar: const AndroAppBar(
         pageTitle: 'Event Details',
         showBack: true,
       ),
@@ -204,7 +204,8 @@ class _EventDetailState extends State<EventDetail> {
           : SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             if (widget.event['bannerURL'] != null)
               ClipRRect(
@@ -222,7 +223,8 @@ class _EventDetailState extends State<EventDetail> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              child: Padding(
+              child: Container(
+                width: MediaQuery.of(context).size.width > 400 ? 400 : MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -278,9 +280,8 @@ class _EventDetailState extends State<EventDetail> {
                       TextFormField(
                         controller: _nameController,
                         readOnly: !_isEditing,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Name',
-                          labelStyle: GoogleFonts.openSans(),
                         ),
                         style: GoogleFonts.openSans(fontSize: 16),
                       ),
@@ -288,9 +289,8 @@ class _EventDetailState extends State<EventDetail> {
                       TextFormField(
                         controller: _emailController,
                         readOnly: true,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Email',
-                          labelStyle: GoogleFonts.openSans(),
                         ),
                         style: GoogleFonts.openSans(fontSize: 16),
                       ),
@@ -298,9 +298,8 @@ class _EventDetailState extends State<EventDetail> {
                       TextFormField(
                         controller: _phoneController,
                         readOnly: !_isEditing,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Phone',
-                          labelStyle: GoogleFonts.openSans(),
                         ),
                         style: GoogleFonts.openSans(fontSize: 16),
                       ),
@@ -308,9 +307,8 @@ class _EventDetailState extends State<EventDetail> {
                       TextFormField(
                         controller: _regNoController,
                         readOnly: !_isEditing,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Registration No',
-                          labelStyle: GoogleFonts.openSans(),
                         ),
                         style: GoogleFonts.openSans(fontSize: 16),
                       ),
@@ -318,9 +316,8 @@ class _EventDetailState extends State<EventDetail> {
                       TextFormField(
                         controller: _upiTransactionIdController,
                         readOnly: !_isEditing,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'UPI Transaction ID',
-                          labelStyle: GoogleFonts.openSans(),
                         ),
                         style: GoogleFonts.openSans(fontSize: 16),
                       ),
@@ -360,25 +357,16 @@ class _EventDetailState extends State<EventDetail> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          ElevatedButton(
-                            onPressed: _toggleEdit,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white, // Button background color
-                              foregroundColor: Colors.black, // Button text color
-                              textStyle: GoogleFonts.poppins(), // Set font to Poppins
-                            ),
-                            child: Text(_isEditing ? 'Cancel' : 'Edit'),
-                          ),
-                          if (_isEditing)
+                          if(widget.event['paymentStatus']!="Verified")
                             ElevatedButton(
-                              onPressed: _submitChanges,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white, // Button background color
-                                foregroundColor: Colors.black, // Button text color
-                                textStyle: GoogleFonts.poppins(), // Set font to Poppins
-                              ),
-                              child: const Text('Submit'),
+                              onPressed: _toggleEdit,
+                              child: Text(_isEditing ? 'Cancel' : 'Edit'),
                             ),
+                            if (_isEditing)
+                              ElevatedButton(
+                                onPressed: _submitChanges,
+                                child: const Text('Submit'),
+                              ),
                         ],
                       ),
 

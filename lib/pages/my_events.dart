@@ -18,6 +18,7 @@ class _MyEventState extends State<MyEvent> {
   final List<Map<String, dynamic>> _eventData = []; // List to hold event data
   bool _isLoading = true; // Flag to track loading state
   String? _userEmail; // Variable to store user email
+  double screenWidth = 0.0;
 
   // Function to fetch user email from Firestore
   Future<void> fetchUserEmail() async {
@@ -110,12 +111,16 @@ class _MyEventState extends State<MyEvent> {
       } else {
         print('User document does not exist.');
       }
+      // setState(() {
+      //   screenWidth = MediaQuery.of(context).size.width;
+      // });
     } catch (e) {
       print('Error fetching event data: $e');
     } finally {
       // Set loading to false after data fetch is complete
       setState(() {
         _isLoading = false;
+        screenWidth = MediaQuery.of(context).size.width;
       });
     }
   }
@@ -129,9 +134,10 @@ class _MyEventState extends State<MyEvent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AndroAppBar(
+      appBar: const AndroAppBar(
         pageTitle: 'My Events',
         showBack: true,
+        clickableIcons: false
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator()) // Show loading spinner while data is fetched
@@ -139,7 +145,7 @@ class _MyEventState extends State<MyEvent> {
           ? const Center(
         child: Text(
           'Not registered in any events', // Show message if no events are found
-          style: TextStyle(fontSize: 18, color: Colors.black),
+          style: TextStyle(fontSize: 18),
         ),
       )
       : ListView.builder(
@@ -157,12 +163,13 @@ class _MyEventState extends State<MyEvent> {
                 ),
               );
             },
-            child: Card(
-              color: Colors.black, // Set the background color of the card to black
-              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16), // Add margin for spacing
+            child: Card(// Set the background color of the card to black
+              margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 16), // Add margin for spacing
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20), // Rounded corners
-                side: BorderSide(color: Colors.white), // Optional: Add a border to the card
+                side: BorderSide(color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white70 // For dark mode
+                    : Colors.black87), // Optional: Add a border to the card
               ),
               child: Padding(
                 padding: const EdgeInsets.all(12), // Add padding inside the card
@@ -173,8 +180,12 @@ class _MyEventState extends State<MyEvent> {
                         borderRadius: BorderRadius.circular(8),
                         child: Image.network(
                           event['bannerURL'], // Display the event image
+                          // These are the dimensions for future screen size adaptable updates:
+                          // height: screenWidth > 400 ? screenWidth - 320 : 160,
+                          // width: screenWidth > 400 ? screenWidth - 300 : 115,
                           height: 160,
                           width: 115,
+
                           fit: BoxFit.cover,
                           // Other loading and error handling code
                         ),
@@ -189,7 +200,6 @@ class _MyEventState extends State<MyEvent> {
                             style: GoogleFonts.openSans(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -197,7 +207,6 @@ class _MyEventState extends State<MyEvent> {
                             'Date: ${event['date'] ?? 'Unknown'}',
                             style: GoogleFonts.openSans(
                               fontSize: 16,
-                              color: Colors.white,
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -205,7 +214,6 @@ class _MyEventState extends State<MyEvent> {
                             'Time: ${event['time'] ?? 'Unknown'}',
                             style: GoogleFonts.openSans(
                               fontSize: 16,
-                              color: Colors.white,
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -213,7 +221,6 @@ class _MyEventState extends State<MyEvent> {
                             'Venue: ${event['location'] ?? 'Unknown'}',
                             style: GoogleFonts.openSans(
                               fontSize: 16,
-                              color: Colors.white,
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -221,7 +228,6 @@ class _MyEventState extends State<MyEvent> {
                             'Payment Status: ${event['paymentStatus']}',
                             style: GoogleFonts.openSans(
                               fontSize: 16,
-                              color: Colors.white,
                             ),
                           ),
                         ],
