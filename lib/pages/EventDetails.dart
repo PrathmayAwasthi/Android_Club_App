@@ -1,7 +1,10 @@
+import 'dart:io';
 import 'package:android_club_app/pages/user_info_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../widgets/app_bar.dart';
 
@@ -17,9 +20,11 @@ class EventDetail extends StatefulWidget {
 
 class _EventDetailState extends State<EventDetail> {
   bool _isLoading = true;
-  bool _isEditing = false; // To manage edit mode
+  bool _isEditing = false;
   String? _userEmail;
   Map<String, dynamic>? _registeredUserDetails;
+  File? _newImage; // For the new image file
+  String? _newImageURL; // For the uploaded image URL
 
   // TextEditingControllers for the form fields
   TextEditingController _nameController = TextEditingController();
@@ -110,8 +115,37 @@ class _EventDetailState extends State<EventDetail> {
     });
   }
 
-  void _submitChanges() async {
+  Future<void> _pickImage() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _newImage = File(pickedFile.path);
+      });
+    }
+  }
+
+  Future<void> _uploadImage(File image) async {
     try {
+      String fileName = 'payment_screenshots/${DateTime.now().millisecondsSinceEpoch}.jpg';
+      TaskSnapshot snapshot = await FirebaseStorage.instance
+          .ref()
+          .child(fileName)
+          .putFile(image);
+
+      _newImageURL = await snapshot.ref.getDownloadURL();
+      print('Image uploaded: $_newImageURL');
+    } catch (e) {
+      print('Error uploading image: $e');
+    }
+  }
+
+  Future<void> _submitChanges() async {
+    try {
+      // Upload new image if exists
+      if (_newImage != null) {
+        await _uploadImage(_newImage!);
+      }
+
       // Reference to the event document
       DocumentReference eventDocRef =
       FirebaseFirestore.instance.collection('events').doc(widget.eventId);
@@ -132,6 +166,11 @@ class _EventDetailState extends State<EventDetail> {
           registeredUsers[userIndex]['phone'] = _phoneController.text;
           registeredUsers[userIndex]['regNo'] = _regNoController.text;
           registeredUsers[userIndex]['upiTransactionId'] = _upiTransactionIdController.text;
+
+          // Update payment screenshot if a new one was uploaded
+          if (_newImageURL != null) {
+            registeredUsers[userIndex]['paymentscreenshot'] = _newImageURL;
+          }
 
           // Write the updated array back to Firestore
           await eventDocRef.update({
@@ -177,7 +216,7 @@ class _EventDetailState extends State<EventDetail> {
               ),
             const SizedBox(height: 16),
 
-            // Card to show event details
+            // Event details
             Card(
               elevation: 4.0,
               shape: RoundedRectangleBorder(
@@ -188,7 +227,6 @@ class _EventDetailState extends State<EventDetail> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Event details
                     Text(
                       'Name: ${widget.event['name'] ?? 'Unknown'}',
                       style: GoogleFonts.openSans(fontSize: 16),
@@ -219,7 +257,7 @@ class _EventDetailState extends State<EventDetail> {
             ),
             const SizedBox(height: 16),
 
-            // Card to show registered user details
+            // Registered user details
             Card(
               elevation: 4.0,
               shape: RoundedRectangleBorder(
@@ -233,11 +271,10 @@ class _EventDetailState extends State<EventDetail> {
                     if (_registeredUserDetails != null) ...[
                       Text(
                         'Registered User Details:',
-                        style: GoogleFonts.openSans(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: GoogleFonts.openSans(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 8),
-
-                      // Form-like layout for user details
                       TextFormField(
                         controller: _nameController,
                         readOnly: !_isEditing,
@@ -288,17 +325,33 @@ class _EventDetailState extends State<EventDetail> {
                         style: GoogleFonts.openSans(fontSize: 16),
                       ),
                       const SizedBox(height: 8),
-
-                      if (_registeredUserDetails!['payementscreenshot'] != null)
-                        ClipRRect(
+                      if (_registeredUserDetails!['paymentscreenshot'] !=
+                          null)
+                        _newImage == null
+                            ? ClipRRect(
                           borderRadius: BorderRadius.circular(10.0),
                           child: Image.network(
-                            _registeredUserDetails!['payementscreenshot'],
+                            _registeredUserDetails![
+                            'paymentscreenshot'],
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                            : ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: Image.file(
+                            _newImage!,
                             fit: BoxFit.cover,
                           ),
                         ),
+                      const SizedBox(height: 8),
+                      if (_isEditing)
+                        ElevatedButton(
+                          onPressed: _pickImage,
+                          child: const Text('Pick New Image'),
+                        ),
                     ] else
-                      const Text('You are not registered for this event.', style: TextStyle(color: Colors.red)),
+                      const Text('You are not registered for this event.',
+                          style: TextStyle(color: Colors.red)),
 
                     const SizedBox(height: 16),
 
@@ -309,15 +362,26 @@ class _EventDetailState extends State<EventDetail> {
                         children: [
                           ElevatedButton(
                             onPressed: _toggleEdit,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white, // Button background color
+                              foregroundColor: Colors.black, // Button text color
+                              textStyle: GoogleFonts.poppins(), // Set font to Poppins
+                            ),
                             child: Text(_isEditing ? 'Cancel' : 'Edit'),
                           ),
                           if (_isEditing)
                             ElevatedButton(
                               onPressed: _submitChanges,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white, // Button background color
+                                foregroundColor: Colors.black, // Button text color
+                                textStyle: GoogleFonts.poppins(), // Set font to Poppins
+                              ),
                               child: const Text('Submit'),
                             ),
                         ],
                       ),
+
                     ],
                   ],
                 ),
