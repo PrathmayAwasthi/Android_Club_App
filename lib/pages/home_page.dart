@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:android_club_app/pages/DefaultEventDetail.dart';
 import 'package:android_club_app/pages/reg_form.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,7 +25,8 @@ class _HomePageState extends State<HomePage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   List<String> _incompleteBannerUrls = [];
   List<String> _recentCompleteBannerUrls = [];
-  List<String> _eventId = [];
+  List<String> _eventId = []; // For upcoming events
+  List<String> _recentEventIds = []; // For recent events
 
   int activeIndex = 0;
 
@@ -36,13 +38,11 @@ class _HomePageState extends State<HomePage> {
       if (user != null) {
         try {
           final userDoc =
-              FirebaseFirestore.instance.collection('users').doc(user.uid);
+          FirebaseFirestore.instance.collection('users').doc(user.uid);
           final docSnapshot = await userDoc.get();
 
           if (docSnapshot.exists) {
-            // setState(() {
-            //   _isLoading = false;
-            // });
+            // No action needed if user exists
           } else {
             setState(() {
               _isLoading = false;
@@ -64,14 +64,13 @@ class _HomePageState extends State<HomePage> {
     });
 
     _fetchEventBanners();
-    // addFieldToDocuments();
-    //Use the above function with custom mods to add fields to each document
   }
 
   Future<void> _fetchEventBanners() async {
     try {
-      // Fetch events where completion is false
-      QuerySnapshot incompleteSnapshot = await _firestore.collection('events')
+      // Fetch events where completion is false (Upcoming events)
+      QuerySnapshot incompleteSnapshot = await _firestore
+          .collection('events')
           .where('completion', isEqualTo: false)
           .get();
 
@@ -79,54 +78,36 @@ class _HomePageState extends State<HomePage> {
         return doc['bannerURL'] as String;
       }).toList();
 
-      // Fetch the five most recent events where completion is true
-      QuerySnapshot recentCompleteSnapshot = await _firestore.collection('events')
+      List<String> eventIds = incompleteSnapshot.docs.map((doc) {
+        return doc['notificationGroup'] as String; // Get event IDs for upcoming events
+      }).toList();
+
+      // Fetch the five most recent events where completion is true (Recent events)
+      QuerySnapshot recentCompleteSnapshot = await _firestore
+          .collection('events')
           .where('completion', isEqualTo: true)
-          // .orderBy('date', descending: true)
           .limit(5)
           .get();
-
-      List<String> eventIds = incompleteSnapshot.docs.map((doc) {
-        return doc['notificationGroup'] as String; // Get the event id
-      }).toList();
 
       List<String> recentCompleteUrls = recentCompleteSnapshot.docs.map((doc) {
         return doc['bannerURL'] as String;
       }).toList();
 
-      // Update state with fetched banner URLs
+      // Event IDs for recent events
+      List<String> recentEventIds = recentCompleteSnapshot.docs.map((doc) {
+        return doc['notificationGroup'] as String; // Get event IDs for recent events
+      }).toList();
+
+      // Update state with fetched banner URLs and event IDs
       setState(() {
         _incompleteBannerUrls = incompleteUrls;
-        _recentCompleteBannerUrls = recentCompleteUrls;
-        _eventId = eventIds;
+        _eventId = eventIds; // For upcoming events
+        _recentCompleteBannerUrls = recentCompleteUrls; // For recent event banners
+        _recentEventIds = recentEventIds; // For recent event IDs
         _isLoading = false;
       });
     } catch (e) {
       print('Error fetching banner URLs: $e');
-    }
-  }
-
-  Future<void> addFieldToDocuments() async {
-    try {
-      // Reference to the collection
-      CollectionReference users = _firestore.collection('users');
-
-      // Get all documents in the collection
-      QuerySnapshot snapshot = await users.get();
-
-      if (snapshot.docs.isEmpty) {
-        print('No matching documents.');
-        return;
-      }
-
-      // Update each document
-      for (QueryDocumentSnapshot doc in snapshot.docs) {
-        await doc.reference.update({'droids': 0});
-      }
-
-      print('All documents updated successfully.');
-    } catch (e) {
-      print('Error updating documents: $e');
     }
   }
 
@@ -141,131 +122,138 @@ class _HomePageState extends State<HomePage> {
         child: _isLoading
             ? Center(child: CircularProgressIndicator())
             : _errorMessage != null
-                ? Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(0),
-                      child: Text(
-                        _errorMessage!,
-                        style: TextStyle(color: Colors.red),
-                      ),
-                    ),
-                  )
-                : SafeArea(
-                    child: Scaffold(
-                      body: Padding(
-                        padding: const EdgeInsets.all(0),
-                        child: Scrollbar(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
+            ? Center(
+          child: Padding(
+            padding: const EdgeInsets.all(0),
+            child: Text(
+              _errorMessage!,
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        )
+            : SafeArea(
+          child: Scaffold(
+            body: Padding(
+              padding: const EdgeInsets.all(0),
+              child: Scrollbar(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 18),
 
-                                SizedBox(height: 18,),
-
-                                // Current/Upcoming Events
-
-                                if (_incompleteBannerUrls.isNotEmpty) ...[
-                                  Container(
-                                    child: Text(
-                                      "UPCOMING EVENTS",
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.w500,
-                                        letterSpacing: 5,
-                                      ),
-
-                                    ),
-                                  ),
-
-                                  SizedBox(height: 10,),
-
-                                  Padding(
-                                    padding: const EdgeInsets.all(0),
-                                    child: CarouselSlider.builder(
-                                      itemCount: _incompleteBannerUrls.length,
-                                      itemBuilder: (context, index, realIndex) {
-                                        final urlimage = _incompleteBannerUrls[index];
-                                        return InkWell(
-                                          onTap: () {
-                                            Navigator.of(context).push(
-                                              Animation1Route(
-                                                enterWidget: RegForm(
-                                                  eventId: _eventId[index], // Pass the eventid
-                                                  imageUrl: _incompleteBannerUrls[index], // Pass the image url
-                                                ),
-                                                hor: 0.0,
-                                                ver: -0.3
-                                              ),
-                                            );
-                                          },
-                                          child: buildImage(urlimage, index),
-                                        );
-                                      },
-                                      options: CarouselOptions(
-                                          height: 300,
-                                          aspectRatio: 1 / 1,
-                                          enlargeCenterPage: true,
-                                          viewportFraction: 0.8,
-                                          autoPlay: true,
-                                          autoPlayInterval: Duration(seconds: 5),
-                                          enableInfiniteScroll: _incompleteBannerUrls.length > 1
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 12,
-                                  ),
-                                ],
-
-                                // Past Events
-
-                                SizedBox(height: 24,),
-
-                                Container(
-                                  child: Text(
-                                    "RECENT EVENTS",
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w500,
-                                      letterSpacing: 5,
-                                    ),
-
-                                  ),
-                                ),
-
-                                SizedBox(height: 10,),
-
-                                Padding(
-                                  padding: const EdgeInsets.all(0),
-                                  child: CarouselSlider.builder(
-                                    itemCount: _recentCompleteBannerUrls.length,
-                                    itemBuilder: (context, index, realIndex) {
-                                      final urlimage = _recentCompleteBannerUrls[index];
-                                      return buildImage(urlimage, index);
-                                    },
-                                    options: CarouselOptions(
-                                      height: 350,
-                                      aspectRatio: 1 / 1,
-                                      initialPage: 3,
-                                      enlargeCenterPage: true,
-                                      viewportFraction: 0.8,
-                                      autoPlay: true,
-                                      autoPlayInterval: Duration(seconds: 4),
-                                    ),
-                                  ),
-                                ),
-
-                                SizedBox(height: 100,),
-
-
-                              ],
+                      // Current/Upcoming Events
+                      if (_incompleteBannerUrls.isNotEmpty) ...[
+                        Container(
+                          child: Text(
+                            "UPCOMING EVENTS",
+                            style: GoogleFonts.poppins(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 5,
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                  ),
-      ),
+                        SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.all(0),
+                          child: CarouselSlider.builder(
+                            itemCount: _incompleteBannerUrls.length,
+                            itemBuilder: (context, index, realIndex) {
+                              final urlImage =
+                              _incompleteBannerUrls[index];
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    Animation1Route(
+                                      enterWidget: RegForm(
+                                        eventId: _eventId[index],
+                                        imageUrl:
+                                        _incompleteBannerUrls[
+                                        index],
+                                      ),
+                                      hor: 0.0,
+                                      ver: -0.3,
+                                    ),
+                                  );
+                                },
+                                child: buildImage(urlImage, index),
+                              );
+                            },
+                            options: CarouselOptions(
+                              height: 300,
+                              aspectRatio: 1 / 1,
+                              enlargeCenterPage: true,
+                              viewportFraction: 0.8,
+                              autoPlay: true,
+                              autoPlayInterval: Duration(seconds: 5),
+                              enableInfiniteScroll:
+                              _incompleteBannerUrls.length > 1,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 12),
+                      ],
 
+                      // Past Events
+                      SizedBox(height: 24),
+                      Container(
+                        child: Text(
+                          "RECENT EVENTS",
+                          style: GoogleFonts.poppins(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 5,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.all(0),
+                        child: CarouselSlider.builder(
+                          itemCount:
+                          _recentCompleteBannerUrls.length,
+                          itemBuilder:
+                              (context, index, realIndex) {
+                            final urlImage =
+                            _recentCompleteBannerUrls[index];
+                            return InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  Animation1Route(
+                                    enterWidget: Defaulteventdetail(
+                                      eventId: _recentEventIds[index], // Use correct eventId for recent events
+                                      imageUrl:
+                                      _recentCompleteBannerUrls[
+                                      index],
+                                    ),
+                                    hor: 0.0,
+                                    ver: -0.3,
+                                  ),
+                                );
+                              },
+                              child: buildImage(urlImage, index),
+                            );
+                          },
+                          options: CarouselOptions(
+                            height: 350,
+                            aspectRatio: 1 / 1,
+                            initialPage: 3,
+                            enlargeCenterPage: true,
+                            viewportFraction: 0.8,
+                            autoPlay: true,
+                            autoPlayInterval: Duration(seconds: 4),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 100),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -282,3 +270,4 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+

@@ -184,7 +184,67 @@ class MyCustomFormState extends State<MyCustomForm> {
                 fit: BoxFit.cover,
               ), // Add image view
 
-              const SizedBox(height: 20), // Add space between image and form fields
+              const SizedBox(height: 20),
+
+              Card(
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Account Details',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      SelectableText(
+                        "Bank Name - Indian Bank, VIT Bhopal University, Kothri kalan",
+                        style: GoogleFonts.openSans(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      SelectableText(
+                        'Name on Bank - Android Club', // Replace with dynamic location if available
+                        style: GoogleFonts.openSans(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      SelectableText(
+                        'Account Number - 6565521552', // Replace with dynamic date if available
+                        style: GoogleFonts.openSans(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      SelectableText(
+                        'IFSC - IDIB000V143', // Replace with dynamic location if available
+                        style: GoogleFonts.openSans(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+
+
 
               // Email Box
               TextFormField(
@@ -344,7 +404,7 @@ class MyCustomFormState extends State<MyCustomForm> {
 
               const SizedBox(height: 20), // Add space between text fields
 
-// UPI Transaction ID TextFormField
+
               TextFormField(
                 decoration: InputDecoration(
                   labelText: 'UPI Transaction ID',
