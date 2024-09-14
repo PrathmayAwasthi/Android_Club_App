@@ -7,11 +7,11 @@ import 'package:google_fonts/google_fonts.dart';
 ThemeData lightMode = ThemeData(
   brightness: Brightness.light,
   colorScheme: ColorScheme.light(
-    background: Color(0xffcae8c3),
+    background: Color(0xFFCAE8C3),
     primary: Colors.white,
     secondary: Colors.white,
     inversePrimary: Color(0xFF999999),
-    surface: Color(0xffe5f7e1)
+    surface: Color(0xFFE5F7E1)
   ),
 
 
@@ -37,7 +37,7 @@ ThemeData lightMode = ThemeData(
 
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: Color(0xffcae8c3), // background color of the button
+      backgroundColor: Color(0xFFCAE8C3), // background color of the button
       foregroundColor: Colors.black, // text color of the button
       elevation: 2, // elevation of the button
       textStyle: GoogleFonts.poppins(),
