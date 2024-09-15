@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:android_club_app/widgets/app_bar.dart';
@@ -246,19 +247,9 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional.fromSTEB(18, 0, 0, 0),
-                                        child: InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => const AboutUs(), // Replace with your About Us page widget
-                                              ),
-                                            );
-                                          },
-                                          child: Text(
-                                            'About Us',
-                                            style: Theme.of(context).textTheme.titleMedium,
-                                          ),
+                                        child: Text(
+                                          'About Us',
+                                          style: Theme.of(context).textTheme.titleMedium,
                                         ),
                                       ),
 
@@ -384,20 +375,20 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                     showDialog(
                                       context: context,
                                       builder: (context) => AlertDialog(
-                                        title: const DefaultTextStyle(
-                                          style: TextStyle(color: Colors.white),
-                                          child: Text("Warning!"),
+                                        title: Text(
+                                          "Warning!",
+                                          style: GoogleFonts.poppins(),
                                         ),
-                                        content: const DefaultTextStyle(
-                                          style: TextStyle(color: Colors.white),
-                                          child: Text("You Sure wanna do that🤨"),
+                                        content: Text(
+                                          "You Sure wanna do that🤨",
+                                          style: GoogleFonts.poppins(),
                                         ),
                                         actions: [
                                           TextButton(
                                             onPressed: () => Navigator.pop(context),
-                                            child: const DefaultTextStyle(
-                                              style: TextStyle(color: Colors.white),
-                                              child: Text("Cancel"),
+                                            child: Text(
+                                              "Cancel",
+                                              style: Theme.of(context).textTheme.titleSmall,
                                             ),
                                           ),
                                           TextButton(
@@ -409,9 +400,9 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                                 MaterialPageRoute(builder: (context) => const CheckAuth()),
                                               );
                                             },
-                                            child: const DefaultTextStyle(
-                                              style: TextStyle(color: Colors.white),
-                                              child: Text("Logout"),
+                                            child: Text(
+                                              "Submit",
+                                              style: Theme.of(context).textTheme.titleSmall,
                                             ),
                                           ),
                                         ],

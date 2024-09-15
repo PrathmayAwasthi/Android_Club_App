@@ -35,6 +35,7 @@ class _BottomNavState extends State<BottomNav> {
         children: [
           PageView(
             controller: pageController,
+            physics: const NeverScrollableScrollPhysics(),
             children: const [
 
               PollsPage(),
@@ -63,18 +64,33 @@ class _BottomNavState extends State<BottomNav> {
                     BottomNavigationBarItem(
                         icon: Padding(
                           padding: EdgeInsets.all(6.0),
+                          child: Icon(Icons.poll_outlined),
+                        ),
+                        activeIcon: Padding(
+                          padding: EdgeInsets.all(6.0),
                           child: Icon(Icons.poll),
-                        ), label: 'Polls'),
+                        ),
+                        label: 'Polls'),
                     BottomNavigationBarItem(
                         icon: Padding(
+                          padding: EdgeInsets.all(6.0),
+                          child: Icon(Icons.home_outlined),
+                        ),
+                        activeIcon: Padding(
                           padding: EdgeInsets.all(6.0),
                           child: Icon(Icons.home),
-                        ), label: 'Home'),
+                        ),
+                        label: 'Home'),
                     BottomNavigationBarItem(
                         icon: Padding(
                           padding: EdgeInsets.all(6.0),
+                          child: Icon(Icons.shopping_bag_outlined),
+                        ),
+                        activeIcon: Padding(
+                          padding: EdgeInsets.all(6.0),
                           child: Icon(Icons.shopping_bag),
-                        ), label: 'Merch'),
+                        ),
+                        label: 'Merch'),
                   ],
                   currentIndex: selectedIndex,
                   selectedItemColor: Theme.of(context).brightness == Brightness.dark
