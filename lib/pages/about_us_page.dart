@@ -165,9 +165,10 @@ class AboutUs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AndroAppBar(
+      appBar: const AndroAppBar(
         pageTitle: 'About Us',
         showBack: true,
+        clickableIcons: false,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

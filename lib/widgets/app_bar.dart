@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:android_club_app/widgets/animation_custom1.dart';
 import 'package:android_club_app/pages/user_info_page.dart';
@@ -61,6 +61,16 @@ class _CustomAppBarState extends State<AndroAppBar> {
     } catch (e) {
       print('Error fetching user data: $e');
     }
+    _setStatusBarColor();
+
+  }
+
+  void _setStatusBarColor() {
+    final Brightness brightness = Theme.of(context).brightness;
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: brightness == Brightness.dark ? Colors.white12 : Colors.black45, // Same as your AppBar's background
+      statusBarIconBrightness: brightness == Brightness.dark ? Brightness.light : Brightness.dark, // Icons color
+    ));
   }
 
   @override
