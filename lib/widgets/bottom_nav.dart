@@ -35,8 +35,7 @@ class _BottomNavState extends State<BottomNav> {
         children: [
           PageView(
             controller: pageController,
-            children: const [
-
+            children:const [
               PollsPage(),
               HomePage(),
               MerchPage(),
