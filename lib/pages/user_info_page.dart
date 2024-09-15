@@ -257,58 +257,6 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                   ),
                                 ),
                               ),
-                              // Divider(
-                              //   thickness: 1,
-                              //   color: Theme.of(context).colorScheme.secondary,
-                              // ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  // onTap: () {
-                                  //   Navigator.of(context).push(
-                                  //     Animation1Route(
-                                  //       enterWidget: MyEvent(),
-                                  //     ),
-                                  //   );
-                                  // },
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Container(
-                                        width: 35,
-                                        height: 35,
-                                        decoration: BoxDecoration(
-                                          color: Theme.of(context).colorScheme.inversePrimary,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(4),
-                                          child: Icon(
-                                            Icons.support_rounded,
-                                            color: Theme.of(context).colorScheme.primary,
-                                            size: 20,
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(18, 0, 0, 0),
-                                        child: Text(
-                                          'Support',
-                                          style: Theme.of(context).textTheme.titleMedium,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              // Divider(
-                              //   thickness: 1,
-                              //   color: Theme.of(context).colorScheme.secondary,
-                              // ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
                                 child: InkWell(
@@ -353,10 +301,6 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                   ),
                                 ),
                               ),
-                              // Divider(
-                              //   thickness: 1,
-                              //   color: Theme.of(context).colorScheme.secondary,
-                              // ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
                                 child: InkWell(
