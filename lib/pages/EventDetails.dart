@@ -126,7 +126,7 @@ class _EventDetailState extends State<EventDetail> {
 
   Future<void> _uploadImage(File image) async {
     try {
-      String fileName = 'payment_screenshots/${DateTime.now().millisecondsSinceEpoch}.jpg';
+      String fileName = 'EventPayments/${widget.eventId}/${DateTime.now().millisecondsSinceEpoch}.jpg';
       TaskSnapshot snapshot = await FirebaseStorage.instance
           .ref()
           .child(fileName)
@@ -196,8 +196,8 @@ class _EventDetailState extends State<EventDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AndroAppBar(
-        pageTitle: 'Event Details',
-        showBack: true,
+          pageTitle: 'Event Details',
+          showBack: true,
           clickableIcons: false
       ),
       body: _isLoading
@@ -363,11 +363,11 @@ class _EventDetailState extends State<EventDetail> {
                               onPressed: _toggleEdit,
                               child: Text(_isEditing ? 'Cancel' : 'Edit'),
                             ),
-                            if (_isEditing)
-                              ElevatedButton(
-                                onPressed: _submitChanges,
-                                child: const Text('Submit'),
-                              ),
+                          if (_isEditing)
+                            ElevatedButton(
+                              onPressed: _submitChanges,
+                              child: const Text('Submit'),
+                            ),
                         ],
                       ),
 

@@ -22,14 +22,14 @@ class RegForm extends StatelessWidget {
     const appTitle = 'Registration Form';
 
     return Scaffold(
-        appBar: AndroAppBar(
+      appBar: const AndroAppBar(
           pageTitle: 'Form',
           showBack: true,
-            clickableIcons: false
-        ),
-        body: MyCustomForm(eventId: eventId, imageUrl: imageUrl), // Pass eventId and imageUrl to MyCustomForm
-        );
-    }
+          clickableIcons: false
+      ),
+      body: MyCustomForm(eventId: eventId, imageUrl: imageUrl), // Pass eventId and imageUrl to MyCustomForm
+    );
+  }
 }
 
 class MyCustomForm extends StatefulWidget {
@@ -52,6 +52,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   final upiTransactionIdController = TextEditingController();
   File? _image;
   String _fileName = 'No file chosen';
+  bool isRegistered = false;
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -76,6 +77,12 @@ class MyCustomFormState extends State<MyCustomForm> {
         regNoController.text = userData['regNo'] ?? '';
         emailController.text = userData['email'] ?? '';
         // You may need to handle the case where these fields are null
+        List<dynamic> allRegisteredEvents = userData['allRegisteredEvents'] ?? [];
+        setState(() {
+          if (allRegisteredEvents.contains(widget.eventId)){
+            isRegistered = true;
+          }
+        });
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('User not found')),
@@ -245,265 +252,263 @@ class MyCustomFormState extends State<MyCustomForm> {
               const SizedBox(height: 20),
 
 
-
-
-              // Email Box
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  labelStyle: Theme.of(context).inputDecorationTheme.labelStyle, // Use dynamic label color
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
-                    ), // Adjusts border color dynamically based on theme
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+              if(!isRegistered)
+                Column(
+                  children: [
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        labelStyle: Theme.of(context).inputDecorationTheme.labelStyle, // Use dynamic label color
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                          ), // Adjusts border color dynamically based on theme
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).brightness == Brightness.dark ? Colors.teal : Colors.black,
+                            width: 2.0,
+                          ),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a name';
+                        }
+                        return null;
+                      },
+                      controller: emailController,
+                      style: GoogleFonts.openSans(fontSize: 18, color: Theme.of(context).colorScheme.onSurface),
                     ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).brightness == Brightness.dark ? Colors.teal : Colors.black,
-                      width: 2.0,
+                    const SizedBox(height: 20), // Add space between text fields
+
+                    // Name Box
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Name',
+                        labelStyle: Theme.of(context).inputDecorationTheme.labelStyle, // Use dynamic label color
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                          ), // Adjusts border color dynamically based on theme
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).brightness == Brightness.dark ? Colors.teal : Colors.black,
+                            width: 2.0,
+                          ),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a name';
+                        }
+                        return null;
+                      },
+                      controller: nameController,
+                      style: GoogleFonts.openSans(fontSize: 18, color: Theme.of(context).colorScheme.onSurface),
                     ),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a name';
-                  }
-                  return null;
-                },
-                controller: emailController,
-                style: GoogleFonts.openSans(fontSize: 18, color: Theme.of(context).colorScheme.onSurface),
-              ),
+                    const SizedBox(height: 20), // Add space between text fields
 
-
-
-              const SizedBox(height: 20), // Add space between text fields
-
-              // Name Box
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Name',
-                  labelStyle: Theme.of(context).inputDecorationTheme.labelStyle, // Use dynamic label color
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
-                    ), // Adjusts border color dynamically based on theme
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                    // Phone Box
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Phone',
+                        labelStyle: Theme.of(context).inputDecorationTheme.labelStyle, // Dynamic label color
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                          ), // Border color based on theme
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                          ), // Enabled border color
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).brightness == Brightness.dark ? Colors.teal : Colors.black,
+                            width: 2.0,
+                          ), // Focused border color
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a phone number';
+                        }
+                        return null;
+                      },
+                      controller: phoneController,
+                      style: GoogleFonts.openSans(
+                        fontSize: 18,
+                        color: Theme.of(context).colorScheme.onSurface, // Dynamic text color
+                      ),
                     ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).brightness == Brightness.dark ? Colors.teal : Colors.black,
-                      width: 2.0,
+                    const SizedBox(height: 20), // Add space between text fields
+
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Registration Number',
+                        labelStyle: Theme.of(context).inputDecorationTheme.labelStyle, // Dynamic label color
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                          ), // Border color based on theme
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                          ), // Enabled border color
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).brightness == Brightness.dark ? Colors.teal : Colors.black,
+                            width: 2.0,
+                          ), // Focused border color
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a registration number';
+                        }
+                        return null;
+                      },
+                      controller: regNoController,
+                      style: GoogleFonts.openSans(
+                        fontSize: 18,
+                        color: Theme.of(context).colorScheme.onSurface, // Dynamic text color
+                      ),
                     ),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a name';
-                  }
-                  return null;
-                },
-                controller: nameController,
-                style: GoogleFonts.openSans(fontSize: 18, color: Theme.of(context).colorScheme.onSurface),
-              ),
+                    const SizedBox(height: 20), // Add space between text fields
 
-
-              const SizedBox(height: 20), // Add space between text fields
-
-              // Phone Box
-              // Phone TextFormField
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Phone',
-                  labelStyle: Theme.of(context).inputDecorationTheme.labelStyle, // Dynamic label color
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
-                    ), // Border color based on theme
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
-                    ), // Enabled border color
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).brightness == Brightness.dark ? Colors.teal : Colors.black,
-                      width: 2.0,
-                    ), // Focused border color
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a phone number';
-                  }
-                  return null;
-                },
-                controller: phoneController,
-                style: GoogleFonts.openSans(
-                  fontSize: 18,
-                  color: Theme.of(context).colorScheme.onSurface, // Dynamic text color
-                ),
-              ),
-
-              const SizedBox(height: 20), // Add space between text fields
-
-// Registration Number TextFormField
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Registration Number',
-                  labelStyle: Theme.of(context).inputDecorationTheme.labelStyle, // Dynamic label color
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
-                    ), // Border color based on theme
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
-                    ), // Enabled border color
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).brightness == Brightness.dark ? Colors.teal : Colors.black,
-                      width: 2.0,
-                    ), // Focused border color
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a registration number';
-                  }
-                  return null;
-                },
-                controller: regNoController,
-                style: GoogleFonts.openSans(
-                  fontSize: 18,
-                  color: Theme.of(context).colorScheme.onSurface, // Dynamic text color
-                ),
-              ),
-
-              const SizedBox(height: 20), // Add space between text fields
-
-
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'UPI Transaction ID',
-                  labelStyle: Theme.of(context).inputDecorationTheme.labelStyle, // Dynamic label color
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
-                    ), // Border color based on theme
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
-                    ), // Enabled border color
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide(
-                      color: Theme.of(context).brightness == Brightness.dark ? Colors.teal : Colors.black,
-                      width: 2.0,
-                    ), // Focused border color
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a UPI transaction ID';
-                  }
-                  return null;
-                },
-                controller: upiTransactionIdController,
-                style: GoogleFonts.openSans(
-                  fontSize: 18,
-                  color: Theme.of(context).colorScheme.onSurface, // Dynamic text color
-                ),
-              ),
-
-
-              const SizedBox(height: 40), // Add space between text fields
-
-              // Payment Screenshot Button
-              Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: _openImagePicker,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white, // Set the background color to white
-                      foregroundColor: Colors.black,
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'UPI Transaction ID',
+                        labelStyle: Theme.of(context).inputDecorationTheme.labelStyle, // Dynamic label color
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                          ), // Border color based on theme
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                          ), // Enabled border color
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).brightness == Brightness.dark ? Colors.teal : Colors.black,
+                            width: 2.0,
+                          ), // Focused border color
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a UPI transaction ID';
+                        }
+                        return null;
+                      },
+                      controller: upiTransactionIdController,
+                      style: GoogleFonts.openSans(
+                        fontSize: 18,
+                        color: Theme.of(context).colorScheme.onSurface, // Dynamic text color
+                      ),
                     ),
-                    child: Row(
+                    const SizedBox(height: 40), // Add space between text fields
+
+                    // Payment Screenshot Button
+                    Row(
                       children: [
-                        SvgPicture.asset('assets/images/upload.svg', height: 20, width: 20), // Replace with your SVG file
-                        const SizedBox(width: 10), // Add some space between the icon and the text
-                        const Text('Upload'),
+                        ElevatedButton(
+                          onPressed: _openImagePicker,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white, // Set the background color to white
+                            foregroundColor: Colors.black,
+                          ),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset('assets/images/upload.svg', height: 20, width: 20), // Replace with your SVG file
+                              const SizedBox(width: 10), // Add some space between the icon and the text
+                              const Text('Upload'),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text(_fileName),
                       ],
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  Text(_fileName),
-                ],
-              ),
+                    if (_image != null) ...[
+                      const SizedBox(height: 10),
+                      Image.file(_image!, height: 100),
+                    ],
+                    const SizedBox(height: 10), // Add space between image and submit button
 
-              if (_image != null) ...[
-                const SizedBox(height: 10),
-                Image.file(_image!, height: 100),
-              ],
-
-              const SizedBox(height: 10), // Add space between image and submit button
-
-              // Payment Screenshot Label
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0), // Add left margin
-                child: Text(
-                  'Upload Payment Screenshot here',
-                  style: GoogleFonts.poppins(
-                    fontSize: 14,
-                    // color: Colors.white,
-                  ),
-                ),
-              ),
-
-              // Submit Button
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: ElevatedButton(
-                      onPressed: _submitForm, // Call the _submitForm method
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white, // Set the background color to white
-                        foregroundColor: Colors.black,
+                    // Payment Screenshot Label
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0), // Add left margin
+                      child: Text(
+                        'Upload Payment Screenshot here',
+                        style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          // color: Colors.white,
+                        ),
                       ),
-                      child: const Text('Submit'),
                     ),
+
+                    // Submit Button
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: ElevatedButton(
+                            onPressed: _submitForm, // Call the _submitForm method
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white, // Set the background color to white
+                              foregroundColor: Colors.black,
+                            ),
+                            child: const Text('Submit'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              else
+                const Center(
+                  child: Text(
+                      "You are Already Registered Bud!!"
                   ),
-                ],
-              ),
+                )
+              // Email Box
+
+
+
             ],
           ),
         ),
