@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../widgets/app_bar.dart';
 
@@ -106,8 +107,8 @@ class _DefaulteventdetailState extends State<Defaulteventdetail> {
                         Text(
                           _eventData!['name'] ?? 'Event Name',
                           style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 24,
+                            fontFamily: GoogleFonts.poppins().fontFamily,
+                            fontSize: 22,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -120,16 +121,15 @@ class _DefaulteventdetailState extends State<Defaulteventdetail> {
                               TextSpan(
                                 text: 'Date: ',
                                 style: TextStyle(
-                                  fontFamily: 'Poppins',
+                                  fontFamily: GoogleFonts.poppins().fontFamily,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-
                                 ),
                               ),
                               TextSpan(
                                 text: _eventData!['date'] ?? 'N/A',
                                 style: TextStyle(
-                                  fontFamily: 'OpenSans',
+                                  fontFamily: GoogleFonts.poppins().fontFamily,
                                   fontSize: 16,
 
                                 ),
@@ -146,18 +146,16 @@ class _DefaulteventdetailState extends State<Defaulteventdetail> {
                               TextSpan(
                                 text: 'Time: ',
                                 style: TextStyle(
-                                  fontFamily: 'Poppins',
+                                  fontFamily: GoogleFonts.poppins().fontFamily,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-
                                 ),
                               ),
                               TextSpan(
                                 text: _eventData!['time'] ?? 'N/A',
                                 style: TextStyle(
-                                  fontFamily: 'OpenSans',
+                                  fontFamily: GoogleFonts.poppins().fontFamily,
                                   fontSize: 16,
-
                                 ),
                               ),
                             ],
@@ -173,16 +171,15 @@ class _DefaulteventdetailState extends State<Defaulteventdetail> {
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                                  fontSize: 18,
 
                                 ),
                               ),
                               TextSpan(
                                 text:'INR ' + _eventData!['price'] ?? 'N/A',
                                 style: TextStyle(
-                                  fontFamily: 'OpenSans',
+                                  fontFamily: GoogleFonts.poppins().fontFamily,
                                   fontSize: 16,
-
                                 ),
                               ),
                             ],
@@ -200,16 +197,15 @@ class _DefaulteventdetailState extends State<Defaulteventdetail> {
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                                  fontSize: 18,
 
                                 ),
                               ),
                               TextSpan(
                                 text: _eventData!['location'] ?? 'N/A',
                                 style: TextStyle(
-                                  fontFamily: 'OpenSans',
+                                  fontFamily: GoogleFonts.poppins().fontFamily,
                                   fontSize: 16,
-
                                 ),
                               ),
                             ],
@@ -231,16 +227,15 @@ class _DefaulteventdetailState extends State<Defaulteventdetail> {
                                 style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                                  fontSize: 18,
 
                                 ),
                               ),
                               TextSpan(
                                 text: _eventData!['description'] ?? 'N/A',
                                 style: TextStyle(
-                                  fontFamily: 'OpenSans',
+                                  fontFamily: GoogleFonts.poppins().fontFamily,
                                   fontSize: 16,
-
                                 ),
                               ),
                             ],
