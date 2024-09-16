@@ -24,6 +24,7 @@ dependencies:
   image_picker: ^0.8.4+4
   url_launcher: ^6.3.0
   firebase_database: 11.1.2
+  video_player: ^2.2.6
 
 
 
@@ -36,6 +37,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/
+    - assets/images/splash.mp4
   uses-material-design: true
 
 

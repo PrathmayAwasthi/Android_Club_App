@@ -1,4 +1,5 @@
 
+import 'package:android_club_app/pages/splash_page.dart';
 import 'package:android_club_app/theme/light_mode.dart';
 import 'package:android_club_app/theme/dark_mode.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const CheckAuth(),
+      home: SplashPage(),
       theme: lightMode,
       darkTheme: darkMode,
     );
