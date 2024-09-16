@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  void redirectToForgotPassword() {}
+  // void redirectToForgotPassword() {}
 
   @override
   Widget build(BuildContext context) {
@@ -92,15 +92,15 @@ class _LoginPageState extends State<LoginPage> {
               ),
 
               // Forgot Password Text
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                    onTap: redirectToForgotPassword,
-                    child: Text("Forgot Password?"),
-                  ),
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //     GestureDetector(
+              //       onTap: redirectToForgotPassword,
+              //       child: Text("Forgot Password?"),
+              //     ),
+              //   ],
+              // ),
 
               // Spacing
               SizedBox(height: 15.0),
