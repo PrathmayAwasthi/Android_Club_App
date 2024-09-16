@@ -53,6 +53,11 @@ class MyCustomFormState extends State<MyCustomForm> {
   File? _image;
   String _fileName = 'No file chosen';
   bool isRegistered = false;
+  String _eventName = '';
+  String _eventLocation = '';
+  String _eventDate = '';
+  String _eventTime = '';
+  String _eventPrice = '';
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -61,6 +66,34 @@ class MyCustomFormState extends State<MyCustomForm> {
     super.initState();
     // Fetch user details when the form initializes
     _fetchUserDetails();
+    _fetchEventDetails();
+  }
+
+  Future<void> _fetchEventDetails() async {
+    try {
+      final eventDoc = await FirebaseFirestore.instance.collection('events').doc(widget.eventId).get();
+      if (eventDoc.exists) {
+        final eventData = eventDoc.data()!;
+        setState(() {
+          _eventName = eventData['name'] ?? '';
+          _eventLocation = eventData['location'] ?? '';
+          _eventDate = eventData['date'] ?? '';
+          _eventTime = eventData['time'] ?? '';
+          _eventPrice = eventData['price'] ?? '';
+          print(_eventName);
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Event not found')),
+
+        );
+        print('Event Not found');
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error fetching event details: $e')),
+      );
+    }
   }
 
   Future<void> _fetchUserDetails() async {
@@ -194,7 +227,9 @@ class MyCustomFormState extends State<MyCustomForm> {
 
               const SizedBox(height: 20),
 
-              Card(
+            Container(
+              width: double.infinity, // Makes the card width match the parent
+              child: Card(
                 elevation: 3,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0),
@@ -204,43 +239,108 @@ class MyCustomFormState extends State<MyCustomForm> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Account Details',
-                        style: TextStyle(
+                      Text(
+                        'Event Details',
+                        style: GoogleFonts.poppins(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: 10),
-                      SelectableText(
-                        "Bank Name - Indian Bank, VIT Bhopal University, Kothri kalan",
-                        style: GoogleFonts.openSans(
-                          fontSize: 16,
-                          color: Theme.of(context).colorScheme.onSurface,
+                      SelectableText.rich(
+                        TextSpan(
+                          text: 'Name: ',
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: '$_eventName',
+                              style: GoogleFonts.openSans(
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      const SizedBox(height: 5),
+                      SelectableText.rich(
+                        TextSpan(
+                          text: 'Date: ',
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: '$_eventDate',
+                              style: GoogleFonts.openSans(
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      const SizedBox(height: 5),
+                      SelectableText.rich(
+                        TextSpan(
+                          text: 'Time: ',
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: '$_eventTime',
+                              style: GoogleFonts.openSans(
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 5),
-                      SelectableText(
-                        'Name on Bank - Android Club', // Replace with dynamic location if available
-                        style: GoogleFonts.openSans(
-                          fontSize: 16,
-                          color: Theme.of(context).colorScheme.onSurface,
+                      SelectableText.rich(
+                        TextSpan(
+                          text: 'Price: ',
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: '$_eventPrice',
+                              style: GoogleFonts.openSans(
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 5),
-                      SelectableText(
-                        'Account Number - 6565521552', // Replace with dynamic date if available
-                        style: GoogleFonts.openSans(
-                          fontSize: 16,
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      SelectableText(
-                        'IFSC - IDIB000V143', // Replace with dynamic location if available
-                        style: GoogleFonts.openSans(
-                          fontSize: 16,
-                          color: Theme.of(context).colorScheme.onSurface,
+                      SelectableText.rich(
+                        TextSpan(
+                          text: 'Location: ',
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: '$_eventLocation',
+                              style: GoogleFonts.openSans(
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 5),
@@ -248,8 +348,117 @@ class MyCustomFormState extends State<MyCustomForm> {
                   ),
                 ),
               ),
+            ),
+
 
               const SizedBox(height: 20),
+
+            Card(
+              elevation: 3,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Account Details heading in Poppins
+                    Text(
+                      'Account Details',
+                      style: GoogleFonts.poppins(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    // Bank Name
+                    SelectableText.rich(
+                      TextSpan(
+                        text: 'Bank Name - ', // Title
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: 'Indian Bank, VIT Bhopal University, Kothri kalan', // Value
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    // Name on Bank
+                    SelectableText.rich(
+                      TextSpan(
+                        text: 'Name on Bank - ', // Title
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: 'Android Club', // Value
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    // Account Number
+                    SelectableText.rich(
+                      TextSpan(
+                        text: 'Account Number - ', // Title
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: '6565521552', // Value
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    // IFSC
+                    SelectableText.rich(
+                      TextSpan(
+                        text: 'IFSC - ', // Title
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: 'IDIB000V143', // Value
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                  ],
+                ),
+              ),
+            ),
+
+
+            const SizedBox(height: 20),
 
 
               if(!isRegistered)
