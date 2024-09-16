@@ -258,7 +258,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           children: [
                             TextSpan(
                               text: '$_eventName',
-                              style: GoogleFonts.openSans(
+                              style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
@@ -278,7 +278,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           children: [
                             TextSpan(
                               text: '$_eventDate',
-                              style: GoogleFonts.openSans(
+                              style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
@@ -298,7 +298,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           children: [
                             TextSpan(
                               text: '$_eventTime',
-                              style: GoogleFonts.openSans(
+                              style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
@@ -317,7 +317,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           children: [
                             TextSpan(
                               text: '$_eventPrice',
-                              style: GoogleFonts.openSans(
+                              style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
@@ -336,7 +336,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                           children: [
                             TextSpan(
                               text: '$_eventLocation',
-                              style: GoogleFonts.openSans(
+                              style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
@@ -709,11 +709,19 @@ class MyCustomFormState extends State<MyCustomForm> {
                   ],
                 )
               else
-                const Center(
-                  child: Text(
-                      "You are Already Registered Bud!!"
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20), // you can keep the const here for Padding
+                    child: Text(
+                      "You are Already Registered Bud!!",
+                      style: GoogleFonts.poppins(
+                        fontSize: 28,
+                        // fontWeight: FontWeight.bold
+                      ),
+                    ),
                   ),
                 )
+
               // Email Box
 
 
