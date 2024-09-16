@@ -40,6 +40,8 @@ flutter:
     - assets/images/
     - assets/images/splash.mp4
     - assets/images/icon.png
+
+
   uses-material-design: true
 
 flutter_launcher_icons:
