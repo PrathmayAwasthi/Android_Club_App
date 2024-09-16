@@ -22,44 +22,22 @@ class _SplashPageState extends State<SplashPage> {
         _controller.play(); // Automatically start playing the video
       });
 
-    _controller.setLooping(false); // Video won't loop
+    _controller.setLooping(false); // Video won't loop by default
 
     // Listener to detect when the video completes
     _controller.addListener(() {
       if (_controller.value.position == _controller.value.duration) {
-        // When video completes, delay slightly to ensure transition is smooth
-        Future.delayed(Duration(milliseconds: 100), () {
-          // Navigate with bottom-to-top animation after the video
-          Navigator.of(context).pushReplacement(_createRoute());
-        });
+        // Navigate to BottomNav page when the video finishes
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => CheckAuth()),
+        );
       }
     });
   }
 
-  // Custom route with bottom-to-top slide animation
-  Route _createRoute() {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => CheckAuth(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(0.0, 1.0); // Start from the bottom
-        const end = Offset.zero; // End at normal position
-        const curve = Curves.easeInOut;
-
-        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-        var offsetAnimation = animation.drive(tween);
-
-        return SlideTransition(
-          position: offsetAnimation,
-          child: child,
-        );
-      },
-      transitionDuration: Duration(milliseconds: 700), // Duration of slide transition
-    );
-  }
-
   @override
   void dispose() {
-    _controller.dispose(); // Dispose of the controller to free up resources
+    _controller.dispose(); // Dispose of the controller to free resources
     super.dispose();
   }
 
