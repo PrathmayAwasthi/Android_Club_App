@@ -5,6 +5,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:android_club_app/models/user.dart';
+import 'package:android_club_app/auth/user_data_manager.dart';
 
 import '../widgets/app_bar.dart';
 
@@ -19,12 +21,15 @@ class EventDetail extends StatefulWidget {
 }
 
 class _EventDetailState extends State<EventDetail> {
+  AppUser? _user;
   bool _isLoading = true;
   bool _isEditing = false;
   String? _userEmail;
   Map<String, dynamic>? _registeredUserDetails;
   File? _newImage; // For the new image file
   String? _newImageURL; // For the uploaded image URL
+
+
 
   // TextEditingControllers for the form fields
   TextEditingController _nameController = TextEditingController();
@@ -50,22 +55,12 @@ class _EventDetailState extends State<EventDetail> {
   }
 
   Future<void> fetchUserEmail() async {
-    try {
-      final String userPId = getUserId();
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userPId)
-          .get();
-
-      if (userDoc.exists) {
-        _userEmail = userDoc['email'];
-        fetchRegisteredUserDetails(); // Fetch details of the registered user
-      } else {
-        print('User document does not exist.');
-      }
-    } catch (e) {
-      print('Error fetching user email: $e');
-    }
+    final user = await UserDataManager.getUserData();
+    setState(() {
+      _user = user;
+      _userEmail = _user!.email;
+    });
+    fetchRegisteredUserDetails();
   }
 
   Future<void> fetchRegisteredUserDetails() async {

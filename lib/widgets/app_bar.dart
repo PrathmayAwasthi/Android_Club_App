@@ -6,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:android_club_app/widgets/animation_custom1.dart';
 import 'package:android_club_app/pages/user_info_page.dart';
 import 'package:android_club_app/pages/ranking_page.dart';
+import 'package:android_club_app/models/user.dart';
+import 'package:android_club_app/auth/user_data_manager.dart';
 
 
 class AndroAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -34,7 +36,7 @@ class _CustomAppBarState extends State<AndroAppBar> {
   String displayName = '';
   String profileURL = '';
   int droid = 0;
-  final FirebaseAuth auth = FirebaseAuth.instance;
+  AppUser? _user;
 
   @override
   void initState() {
@@ -45,18 +47,14 @@ class _CustomAppBarState extends State<AndroAppBar> {
   // Fetch user data from Firestore
   Future<void> _fetchUserData() async {
     try {
-      final user = auth.currentUser;
+      final user = await UserDataManager.getUserData();
       if (user != null) {
-        final userDoc = FirebaseFirestore.instance.collection('users').doc(user.uid);
-        DocumentSnapshot doc = await userDoc.get();
-        if (doc.exists) {
-          String userName = doc['name'] ?? 'User';
-          setState(() {
-            displayName = userName.split(' ')[0];
-            profileURL = doc['profilePic'] ?? '';
-            droid = doc['droids'] ?? 0;
-          });
-        }
+        setState(() {
+          _user = user;
+          displayName = _user!.name.split(' ')[0];
+          profileURL = _user!.profilePic;
+          droid = _user!.droids;
+        });
       }
     } catch (e) {
       print('Error fetching user data: $e');
@@ -81,8 +79,8 @@ class _CustomAppBarState extends State<AndroAppBar> {
         child: AppBar(
           automaticallyImplyLeading: false, // Disable back button by default
           backgroundColor: Theme.of(context).brightness == Brightness.dark
-            ? Colors.white12 // For dark mode
-            : Colors.black45,
+              ? Colors.white12 // For dark mode
+              : Colors.black45,
           flexibleSpace: Container(
             padding: const EdgeInsets.only(left: 20),
             child: Row(
@@ -143,18 +141,9 @@ class _CustomAppBarState extends State<AndroAppBar> {
                               : const SizedBox.shrink(),
                           Flexible( // Use Flexible to wrap the Text
                             child: widget.showBack
-                              ? Transform.translate( // Use Transform to translate the Text when showBack is true
-                                offset: const Offset(-20, 0), // Translate 20 pixels to the left
-                                child: Text(
-                                  widget.pageTitle,
-                                  style: GoogleFonts.montserrat(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1,
-                                  ),
-                                ),
-                              )
-                              : Text(
+                                ? Transform.translate( // Use Transform to translate the Text when showBack is true
+                              offset: const Offset(-20, 0), // Translate 20 pixels to the left
+                              child: Text(
                                 widget.pageTitle,
                                 style: GoogleFonts.montserrat(
                                   fontSize: 20,
@@ -162,6 +151,15 @@ class _CustomAppBarState extends State<AndroAppBar> {
                                   letterSpacing: 1,
                                 ),
                               ),
+                            )
+                                : Text(
+                              widget.pageTitle,
+                              style: GoogleFonts.montserrat(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 1,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -180,9 +178,9 @@ class _CustomAppBarState extends State<AndroAppBar> {
                           onTap: !widget.clickableIcons ? null : () { // null when false
                             Navigator.of(context).push(
                               Animation1Route(
-                                enterWidget: const RankingPage(),
-                                hor: 0.45,
-                                ver: -0.85
+                                  enterWidget: const RankingPage(),
+                                  hor: 0.45,
+                                  ver: -0.85
                               ),
                             );
                           },
@@ -190,8 +188,8 @@ class _CustomAppBarState extends State<AndroAppBar> {
                             padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 3),
                             decoration: BoxDecoration(
                               color: Theme.of(context).brightness == Brightness.dark
-                                ? Colors.white12 // For dark mode
-                                : Colors.black26, // Light background color
+                                  ? Colors.white12 // For dark mode
+                                  : Colors.black26, // Light background color
                               borderRadius: BorderRadius.circular(15.0), // Rounded corners
                             ),
                             child: Row(
@@ -220,9 +218,9 @@ class _CustomAppBarState extends State<AndroAppBar> {
                           onTap: !widget.clickableIcons ? null : () { // null when false
                             Navigator.of(context).push(
                               Animation1Route(
-                                enterWidget: const UserInfoPage(), //  Transition when true
-                                hor: 0.8,
-                                ver: -0.85
+                                  enterWidget: const UserInfoPage(), //  Transition when true
+                                  hor: 0.8,
+                                  ver: -0.85
                               ),
                             );
                           },

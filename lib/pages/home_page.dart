@@ -5,7 +5,7 @@ import 'package:android_club_app/pages/reg_form.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:android_club_app/auth/firebase_auth/userDetDialog.dart';
+import 'package:android_club_app/widgets/userDetDialog.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:android_club_app/widgets/app_bar.dart';

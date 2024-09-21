@@ -4,11 +4,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:io';
-import 'package:android_club_app/theme/light_mode.dart'; // Import your light theme
-import 'package:android_club_app/theme/dark_mode.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:android_club_app/models/user.dart';
+import 'package:android_club_app/auth/user_data_manager.dart';
 
 import '../widgets/app_bar.dart';
 
@@ -19,7 +19,6 @@ class RegForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const appTitle = 'Registration Form';
 
     return Scaffold(
       appBar: const AndroAppBar(
@@ -44,6 +43,7 @@ class MyCustomForm extends StatefulWidget {
 }
 
 class MyCustomFormState extends State<MyCustomForm> {
+  AppUser? _user;
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final nameController = TextEditingController();
@@ -53,80 +53,28 @@ class MyCustomFormState extends State<MyCustomForm> {
   File? _image;
   String _fileName = 'No file chosen';
   bool isRegistered = false;
-  String _eventName = '';
-  String _eventLocation = '';
-  String _eventDate = '';
-  String _eventTime = '';
-  String _eventPrice = '';
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
     super.initState();
-    // Fetch user details when the form initializes
     _fetchUserDetails();
-    _fetchEventDetails();
-  }
-
-  Future<void> _fetchEventDetails() async {
-    try {
-      final eventDoc = await FirebaseFirestore.instance.collection('events').doc(widget.eventId).get();
-      if (eventDoc.exists) {
-        final eventData = eventDoc.data()!;
-        setState(() {
-          _eventName = eventData['name'] ?? '';
-          _eventLocation = eventData['location'] ?? '';
-          _eventDate = eventData['date'] ?? '';
-          _eventTime = eventData['time'] ?? '';
-          _eventPrice = eventData['price'] ?? '';
-          print(_eventName);
-        });
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Event not found')),
-
-        );
-        print('Event Not found');
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error fetching event details: $e')),
-      );
-    }
   }
 
   Future<void> _fetchUserDetails() async {
-    try {
-      // Replace 'userIdentifier' with the actual field you want to query, like email or registration number
-      final String userPId = getUserId();
-      final userDoc = await _firestore.collection('users').doc(userPId).get();
-
-      if (userDoc.exists) {
-        final userData = userDoc.data()!;
-        // Update the text controllers with the retrieved data
-        nameController.text = userData['name'] ?? '';
-        phoneController.text = userData['phone'] ?? '';
-        regNoController.text = userData['regNo'] ?? '';
-        emailController.text = userData['email'] ?? '';
-        // You may need to handle the case where these fields are null
-        List<dynamic> allRegisteredEvents = userData['allRegisteredEvents'] ?? [];
-        setState(() {
-          if (allRegisteredEvents.contains(widget.eventId)){
-            isRegistered = true;
-          }
-        });
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('User not found')),
-        );
+    final user = await UserDataManager.getUserData();
+    setState(() {
+      _user = user;
+      nameController.text = _user!.name;
+      phoneController.text = _user!.phone;
+      regNoController.text = _user!.regNo;
+      emailController.text = _user!.email;
+      List<dynamic> allRegisteredEvents = _user!.allRegisteredEvents;
+      if (allRegisteredEvents.contains(widget.eventId)){
+        isRegistered = true;
       }
-    } catch (e) {
-      // Handle any errors that occur during the retrieval
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error fetching user details: $e')),
-      );
-    }
+    });
   }
 
   Future<void> _submitForm() async {
@@ -166,7 +114,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             });
 
             // Add logic to update the user's document with the eventId
-            final String userPId = getUserId();
+            final String userPId = _user!.id;
             print('User ID: $userPId');
 
             await _firestore.collection('users').doc(userPId).update({
@@ -220,16 +168,17 @@ class MyCustomFormState extends State<MyCustomForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.network(
-                widget.imageUrl, // Use the imageUrl passed from RegForm
-                fit: BoxFit.cover,
-              ), // Add image view
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10.0), // adjust the value to your liking
+                child: Image.network(
+                  widget.imageUrl,
+                  fit: BoxFit.cover,
+                ),
+              ),
 
               const SizedBox(height: 20),
 
-            Container(
-              width: double.infinity, // Makes the card width match the parent
-              child: Card(
+              Card(
                 elevation: 3,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0),
@@ -239,108 +188,43 @@ class MyCustomFormState extends State<MyCustomForm> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Event Details',
-                        style: GoogleFonts.poppins(
+                      const Text(
+                        'Account Details',
+                        style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: 10),
-                      SelectableText.rich(
-                        TextSpan(
-                          text: 'Name: ',
-                          style: GoogleFonts.poppins(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: '$_eventName',
-                              style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(height: 5),
-                      SelectableText.rich(
-                        TextSpan(
-                          text: 'Date: ',
-                          style: GoogleFonts.poppins(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: '$_eventDate',
-                              style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(height: 5),
-                      SelectableText.rich(
-                        TextSpan(
-                          text: 'Time: ',
-                          style: GoogleFonts.poppins(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: '$_eventTime',
-                              style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ],
+                      SelectableText(
+                        "Bank Name - Indian Bank, VIT Bhopal University, Kothri kalan",
+                        style: GoogleFonts.openSans(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                       const SizedBox(height: 5),
-                      SelectableText.rich(
-                        TextSpan(
-                          text: 'Price: ',
-                          style: GoogleFonts.poppins(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: '$_eventPrice',
-                              style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ],
+                      SelectableText(
+                        'Name on Bank - Android Club', // Replace with dynamic location if available
+                        style: GoogleFonts.openSans(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                       const SizedBox(height: 5),
-                      SelectableText.rich(
-                        TextSpan(
-                          text: 'Location: ',
-                          style: GoogleFonts.poppins(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: '$_eventLocation',
-                              style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ],
+                      SelectableText(
+                        'Account Number - 6565521552', // Replace with dynamic date if available
+                        style: GoogleFonts.openSans(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      SelectableText(
+                        'IFSC - IDIB000V143', // Replace with dynamic location if available
+                        style: GoogleFonts.openSans(
+                          fontSize: 16,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                       const SizedBox(height: 5),
@@ -348,117 +232,8 @@ class MyCustomFormState extends State<MyCustomForm> {
                   ),
                 ),
               ),
-            ),
-
 
               const SizedBox(height: 20),
-
-            Card(
-              elevation: 3,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Account Details heading in Poppins
-                    Text(
-                      'Account Details',
-                      style: GoogleFonts.poppins(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    // Bank Name
-                    SelectableText.rich(
-                      TextSpan(
-                        text: 'Bank Name - ', // Title
-                        style: GoogleFonts.poppins(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: 'Indian Bank, VIT Bhopal University, Kothri kalan', // Value
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    // Name on Bank
-                    SelectableText.rich(
-                      TextSpan(
-                        text: 'Name on Bank - ', // Title
-                        style: GoogleFonts.poppins(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: 'Android Club', // Value
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    // Account Number
-                    SelectableText.rich(
-                      TextSpan(
-                        text: 'Account Number - ', // Title
-                        style: GoogleFonts.poppins(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: '6565521552', // Value
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    // IFSC
-                    SelectableText.rich(
-                      TextSpan(
-                        text: 'IFSC - ', // Title
-                        style: GoogleFonts.poppins(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.onSurface,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: 'IDIB000V143', // Value
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                  ],
-                ),
-              ),
-            ),
-
-
-            const SizedBox(height: 20),
 
 
               if(!isRegistered)
@@ -709,19 +484,11 @@ class MyCustomFormState extends State<MyCustomForm> {
                   ],
                 )
               else
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20), // you can keep the const here for Padding
-                    child: Text(
-                      "You are Already Registered Bud!!",
-                      style: GoogleFonts.poppins(
-                        fontSize: 28,
-                        // fontWeight: FontWeight.bold
-                      ),
-                    ),
+                const Center(
+                  child: Text(
+                      "You are Already Registered Bud!!"
                   ),
                 )
-
               // Email Box
 
 
